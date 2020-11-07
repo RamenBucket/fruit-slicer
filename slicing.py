@@ -2,9 +2,9 @@ from cmu_112_graphics import *
 
 def appStarted(app):
     app.polygonList = [(50,50),(100,50),(100,100),(50,100)]
-    app.slicePolygon = [(0,75),(500,75),(500,500),(0,500)]
+    app.sliceTopPolygon = [(0,75),(500,75),(500,500),(0,500)]
+    app.sliceBottomPolygon = [(0,75),(500,75),(500,500),(0,500)]
     app.slice=[None,None]
-    
 
 def mousePressed(app, event):
     
@@ -14,8 +14,8 @@ def mousePressed(app, event):
 def mouseReleased(app, event):
     end = (event.x, event.y)
     app.slice[1] = end
-    app.slicePolygon = calculateTopPolygon(app)
-    print (app.slicePolygon)
+    app.sliceTopPolygon = calculateTopPolygon(app)
+    app.sliceBottomPolygon = calculateBottomPolygon(app)
 
 def calculateTopPolygon(app):
     (x0,y0) = app.slice[0]
@@ -41,16 +41,45 @@ def calculateTopPolygon(app):
         topPolygonList.append(extendPositive(app,x0,y0,dx,dy))
         topPolygonList.append(extendNegative(app,x0,y0,dx,dy))
         slope = (dy/dx)
-        print(f"s ={slope}")
-        # y = mx+b
         intercept = (y0) - (slope*x0)
-        print (f"i ={intercept}")
         for xEnd,yEnd in [(0,0),(app.width,0),(app.width,app.height),
                           (0,app.height)]:
             # check if the point is above line
             if yEnd<slope*xEnd+intercept:
                 topPolygonList.append((xEnd,yEnd))
         return topPolygonList
+
+def calculateBottomPolygon(app):
+    (x0,y0) = app.slice[0]
+    (x1,y1) = app.slice[1]
+    dx = x1 - x0
+    dy = y1 - y0
+
+    bottomPolygonList = []
+
+    if dx == 0:
+        bottomPolygonList.append((app.width,0))
+        bottomPolygonList.append((app.width,app.height))
+        bottomPolygonList.append(extendPositive(app,x0,y0,dx,dy))
+        bottomPolygonList.append(extendNegative(app,x0,y0,dx,dy))
+        return bottomPolygonList
+    elif dy == 0:
+        bottomPolygonList.append((0,app.height))
+        bottomPolygonList.append((app.width,app.height))
+        bottomPolygonList.append(extendPositive(app,x0,y0,dx,dy))
+        bottomPolygonList.append(extendNegative(app,x0,y0,dx,dy))
+        return bottomPolygonList
+    else:
+        bottomPolygonList.append(extendPositive(app,x0,y0,dx,dy))
+        bottomPolygonList.append(extendNegative(app,x0,y0,dx,dy))
+        slope = (dy/dx)
+        intercept = (y0) - (slope*x0)
+        for xEnd,yEnd in [(0,0),(app.width,0),(app.width,app.height),
+                          (0,app.height)]:
+            # check if the point is above line
+            if yEnd>slope*xEnd+intercept:
+                bottomPolygonList.append((xEnd,yEnd))
+        return bottomPolygonList
 
 def extendPositive(app,x,y,dx,dy):
     while (x<=app.height and y<=app.width and x>=0 and y>=0):
@@ -65,11 +94,17 @@ def extendNegative(app,x,y,dx,dy):
     return (x,y)
 
 def redrawAll(app, canvas):
-    slicePolygonDrawList = []
-    for x,y in app.slicePolygon:
-        slicePolygonDrawList.append(x)
-        slicePolygonDrawList.append(y)
-    canvas.create_polygon(slicePolygonDrawList,fill='blue')
+    sliceTop = []
+    for x,y in app.sliceTopPolygon:
+        sliceTop.append(x)
+        sliceTop.append(y)
+    canvas.create_polygon(sliceTop,fill='blue')
+
+    sliceBottom = []
+    for x,y in app.sliceBottomPolygon:
+        sliceBottom.append(x)
+        sliceBottom.append(y)
+    canvas.create_polygon(sliceBottom,fill='red')
 
     polygonDrawList = []
     for x,y in app.polygonList:
