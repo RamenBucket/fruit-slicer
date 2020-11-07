@@ -52,13 +52,13 @@ def calculateTopPolygon(app):
 def calculatePositiveEndpoints(app,x,y,dx,dy):
     while (x<=app.height and y<=app.width and x>=0 and y>=0):
         x+=dx
-        y+=dy
+        y-=dy
     return (x,y)
 
 def calculateNegativeEndpoints(app,x,y,dx,dy):
     while (x<=app.height and y<=app.width and x>=0 and y>=0):
         x-=dx
-        y-=dy
+        y+=dy
     return (x,y)
 
 def redrawAll(app, canvas):
