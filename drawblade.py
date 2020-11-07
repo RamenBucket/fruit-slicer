@@ -4,48 +4,72 @@ import time,random
 def appStarted(app):
     app.mousePress = False
     app.blade = list()
-    app.startpos = None
+    
+    #app.startpos = None
     app.t0,app.t1 = 0,0
-    app.bladeSize = list()
     app.color = [0,0,0]
-    sizingBlade(app)
+    app.bladeTime = 0
+    app.bladeMaxLength = 80 #pixel length of blade
+    app.bladeMaxWidth = 5
     app.bladeColor = None
 
 def mousePressed(app, event):
     if (not app.mousePress):
-        app.startpos = (event.x, event.y)
-        app.blade.append(app.startpos)
         app.mousePress = True
+        #app.startpos = (event.x, event.y)
+        #app.blade.append(app.startpos)
         app.t0 = time.time()
         for i in range(3):
             app.color[i] = random.randint(0,255)
-        app.bladeColor = rgbString(app.color[0],app.color[1],app.color[2])
+        #app.bladeColor = rgbString(app.color[0],app.color[1],app.color[2])
     print(event.x,event.y)
 
 def mouseReleased(app, event):
     app.mousePress = False
+    app.bladeCounter = 0
 
 def mouseDragged(app,event):
+    app.lastMouseX, app.lastMouseY = event.x, event.y
     if (app.mousePress):
-        app.t1 = time.time()
+        #app.t1 = time.time()
+        #app.bladeCounter += 1
         x1,y1 = (event.x,event.y)
-        x0,y0 = app.startpos
-        if (dist(x0,y0,x1,y1) >= app.width/4):
-            app.blade.pop(0)
-        if (app.t1-app.t0 <= 5):
-            app.blade.append((x1,y1))
+        app.blade.insert(0,(x1,y1))
         
-
-
 def timerFired(app):
+    app.timerDelay = 20
     doStep(app)       
             
 def doStep(app):
-    if (not app.mousePress) and (app.blade != []):
-        app.startpos = app.blade[0]
-        app.blade.pop(0)
-        if (len(app.blade) > 2):
-            app.blade.pop(1)
+    app.bladeTime += 1
+    fillExtraPoints(app.blade)# BROKEN
+    lengthUsed = 0
+    i = 0
+    #tempBladeLength = min(app.bladeMaxLength, app.bladeCounter*10)
+    while i < len(app.blade)-2 and lengthUsed < app.bladeMaxLength:
+        (x0, y0), (x1,y1) = app.blade[i], app.blade[i+1]
+        lengthUsed += dist(x0,y0,x1,y1)
+        i += 1
+    if lengthUsed >= app.bladeMaxLength:
+        app.blade = app.blade[:i]
+    
+    removeDelay = int(max(100/(len(app.blade)+1)**2,1))
+    #slower point removal for smaller blade size
+
+    if(len(app.blade) > 0):
+        if(app.mousePress and app.bladeTime%removeDelay == 0): #pop less
+            app.blade.pop() 
+        elif(not(app.mousePress)):#(app.bladeTime%3 == 0):# and not(app.mousePress)):
+            app.blade.pop()
+    #print(i)
+    #while len(app.blade) > i:
+        #app.blade.pop()
+
+def fillExtraPoints(points):
+    for i in range(len(points)-2):
+        (x0,y0),(x1,y1) = points[i], points[i+1]
+        if(dist(x0,y0,x1,y1) > 5):
+            points.insert(i+1,((x1+x0)/2, (y1+y0)/2))
 
 def dist(x0,y0,x1,y1):
     dx = (x0-x1)**2
@@ -66,10 +90,29 @@ def rgbString(r, g, b):
     return f'#{r:02x}{g:02x}{b:02x}'
 
 def redrawAll(app, canvas):
-    for i in range(len(app.blade)):
+    split = 0.3
+    splitIndex = int(len(app.blade)*split)
+    maxSize = app.bladeMaxWidth
+    dSizeUp, dSizeDown = 0, 0
+
+    #initialize blade width constants
+    try:
+        dSizeUp = maxSize/splitIndex
+        dSizeDown = maxSize/(len(app.blade)-splitIndex)
+    except:
+        pass
+
+    for i in range(len(app.blade)-1):
         x,y = app.blade[i]
-        s = app.bladeSize[i%len(app.bladeSize)]
+        x1,y1 = app.blade[i+1]
+        s = 0
+        if(i < splitIndex):
+            s = i*dSizeUp
+        else:
+            s = maxSize-(i-splitIndex)*dSizeDown
+        #s = 5#app.bladeSize[i%len(app.bladeSize)]
         canvas.create_oval(x-s,y-s,x+s,y+s,
-        fill = app.bladeColor,outline = None)
+        fill = "black",outline = '')
+        canvas.create_line(x,y,x1,y1, width=2*s, fill = app.bladeColor)
 
 runApp(width=512, height=512)

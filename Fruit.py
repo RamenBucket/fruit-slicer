@@ -1,5 +1,6 @@
 import centroid
 import math
+import copy 
 
 def getVelVectors(slope):
         vel = 2 #magnitude of velocity imparted
@@ -9,12 +10,25 @@ def getVelVectors(slope):
         #vx2, vy2 = math.cos(angle+math.pi)*vel,math.sin(angle+math.pi)*vel
         return (vx1,vy1)#,(vx2,vy2) #first coordinate is always on the right
 
-def testVelVectors():
-        slope = 9999
-        print(getVelVectors(slope))
+def globalToLocal(points,cx,cy): #canvas coordinates to centroid
+    result = copy.deepcopy(points)
+    for i in range(len(result)):
+        (x,y) = result[i]
+        result[i] = (x-cx, y-cy)
+    return result
 
-testVelVectors()
-
+def localToGlobal(points,cx,cy): #centroid coordinates to canvas
+    result = copy.deepcopy(points)
+    for i in range(len(result)):
+        (x,y) = result[i]
+        result[i] = (x+cx, y+cy)
+    return result
+'''
+def testLocal():
+    list = [(-1,0),(0,1),(1,0),(0,-1)]
+    print(localToGlobal(list, 10, 10))
+testLocal()
+'''
 class Fruit(object):
     def __init__(self, points, pos, vel, fruitType, uncut):
         self.points = points
@@ -24,20 +38,21 @@ class Fruit(object):
         self.uncut = uncut
     
     def slice(p0, p1):
-        
-        #CONVERT TO GLOBAL
-        #slice array into two new arrays
-        #CONVERT BACK TO RELATIVE to proceed
+        (x,y) = self.pos
         (cutX0, cutY0), (cutX1, cutY1) = p0, p1
-        
-        points1 = self.points
-        points2 = self.points
+
+        #convert points to global, slice, convert back to local
+        globPoints = localToGlobal(self.points,x,y)
+
+        (points1, points2) = None #output of daniel's function
+
+        points1 = globalToLocal(points1,x,y) #points around old center
+        points2 = globalToLocal(points2,x,y)
 
         #shift new center of mass
         (xShift1, yShift1) = centroid.find_centroid(points1)
         (xShift2, yShift2) = centroid.find_centroid(points2)
 
-        (x,y) = pos
         pos1 = (x+xShift1, y+yShift1) 
         pos2 = (x+xShift2, y+yShift2)
         
@@ -75,8 +90,6 @@ class Fruit(object):
         (x,y) = pos
         pos = (x+dx, y+dy) #change position based on velocity
         vel = (dx, dy+grav) #gravitational acceleration
-
-
 
 #global to center of mass - each coordiinate is defined relative to the centroid
 # ex) centroid is (122,122) -- coordinates aree  (+1,-2),(-5,+7)
