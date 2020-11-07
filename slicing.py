@@ -23,12 +23,10 @@ def mouseReleased(app, event):
     end = (event.x, event.y)
     app.slice[1] = end
     app.sliceTopPolygon, app.sliceBottomPolygon = calculateSlicePolygons(app)
-    print(app.polygonList)
-    print(app.sliceBottomPolygon)
-    if len(app.polygonList) > 2:
-        app.polygonList.insert(0, app.polygonList[0])
-        app.polygonList = clip(copy.copy(app.polygonList), 
-                               copy.copy(app.sliceBottomPolygon))
+    if len(app.polygonList) > 3:
+        app.polygonList = clip(app.polygonList, app.sliceBottomPolygon)
+        print(app.polygonList)
+        
 
 def calculateSlicePolygons(app):
     (x0,y0) = app.slice[0]
@@ -105,7 +103,7 @@ def getIntercepts(app,slope,intercept):
     return result
 
 def redrawAll(app, canvas):
-    sliceTop = []
+    """ sliceTop = []
     for x,y in app.sliceTopPolygon:
         sliceTop.append(x)
         sliceTop.append(y)
@@ -115,12 +113,14 @@ def redrawAll(app, canvas):
     for x,y in app.sliceBottomPolygon:
         sliceBottom.append(x)
         sliceBottom.append(y)
-    canvas.create_polygon(sliceBottom,fill='red')
+    canvas.create_polygon(sliceBottom,fill='red') """
     
     polygonDrawList = []
     for x,y in app.polygonList:
         polygonDrawList.append(x)
         polygonDrawList.append(y)
-    canvas.create_polygon(polygonDrawList)
+
+    if len(polygonDrawList)>2:
+        canvas.create_polygon(polygonDrawList)
 
 runApp(width=512, height=512)
