@@ -5,7 +5,7 @@ def slicePoly(polyList, mousePoint1, mousePoint2, w, h):
     topPoly, bottomPoly = calculateSlicePolygons(mousePoint1, 
                                                  mousePoint2, w, h)
     poly1 = clip(polyList, topPoly)
-    poly2 = clip(polyList, topPoly)
+    poly2 = clip(polyList, bottomPoly)
     return poly1, poly2
 
 def calculateSlicePolygons(mousePoint1, mousePoint2, w, h):
