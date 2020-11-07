@@ -11,16 +11,26 @@ class Fruit(object):
     def slice(p0, p1):
         #slice array into two new arrays
         #Compute new velocities
+        points1 = self.points
+        points2 = self.points
 
-        #Shift new center of masses
-        newX, newY = centroid.find_centroid(points)
-        (xShift, yShift) = 
+        (xShift1, yShift1) = centroid.find_centroid(points1)
+        (xShift2, yShift2) = centroid.find_centroid(points2)
 
         #shift new center of mass
         (x,y) = pos
-        pos = (x+newX, y+newY) 
-
+        pos1 = (x+xShift1, y+yShift1) 
+        pos2 = (x+xShift2, y+yshift2)
+        
         #Shift points to new centers of masses
+        for i in range(len(points1)):
+            (pX, pY) = points1[i]
+            points1[i] = (pX - xShift, pY - yShift)
+
+        for i in range(len(points2)):
+            (pX, pY) = points2[i]
+            points2[i] = (pX - xShift, pY - yShift)
+
         f1 = Fruit(self.points,self.pos,self.vel,self.fruitType,self.uncut)
         f2 = Fruit(self.points,self.pos,self.vel,self.fruitType,self.uncut)
         return (f1, f2)
