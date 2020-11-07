@@ -1,5 +1,11 @@
 from cmu_112_graphics import *
 import time,random
+from playsound import playsound
+
+
+Sf1 = "CutAir.wav"
+
+
 
 def appStarted(app):
     app.mousePress = False
@@ -20,10 +26,10 @@ def mousePressed(app, event):
         for i in range(3):
             app.color[i] = random.randint(0,255)
         app.bladeColor = rgbString(app.color[0],app.color[1],app.color[2])
-    print(event.x,event.y)
 
 def mouseReleased(app, event):
     app.mousePress = False
+    #playsound(Sf1)
 
 def mouseDragged(app,event):
     if (app.mousePress):
