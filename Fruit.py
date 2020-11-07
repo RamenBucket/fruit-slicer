@@ -44,7 +44,7 @@ class Fruit(object):
         #convert points to global, slice, convert back to local
         globPoints = localToGlobal(self.points,x,y)
         
-        (points1, points2) = sliceFunction.slicePoly(self.points, p0, p1, 
+        (points1, points2) = sliceFunction.slicePoly(globPoints, p0, p1, 
                                                     width, height)
         points1 = globalToLocal(points1,x,y) #points around old center
         points2 = globalToLocal(points2,x,y)
