@@ -1,31 +1,41 @@
 
 
+from cmu_112_graphics import *
+
 import orderClockwise
 import centroid
 import Fruit
-import drawblade
+import blade
 import slicing
-
-
+import time
 
 def appStarted(app):
-    pass
-
+    blade.init(app)
    
-
 def mousePressed(app, event):
-    pass
-    
-
+    if (not app.mousePress):
+        app.mousePress = True
+        #app.startpos = (event.x, event.y)
+        #app.blade.append(app.startpos)
+        app.t0 = time.time()
+    print(event.x,event.y)
 
 def keyPressed(app, event):
     pass
 
 def mouseReleased(app, event):
-    pass
+    app.mousePress = False
+    blade.resetBladeCount(app,event)
+
 
 def mouseDragged(app,event):
-    pass
+    app.lastMouseX, app.lastMouseY = event.x, event.y
+    if (app.mousePress):
+        #app.t1 = time.time()
+        #app.bladeCounter += 1
+        x1,y1 = (event.x,event.y)
+        blade.insertBlade(app,0,(x1,y1))
+
 
 def timerFired(app):
     app.timerDelay = 20
@@ -33,10 +43,11 @@ def timerFired(app):
             
 
 def doStep(app):
-    pass
+    blade.stepBlade(app)
 
 def redrawAll(app, canvas):
-    pass
+    blade.drawBlade(app,canvas)
+
 
 
 

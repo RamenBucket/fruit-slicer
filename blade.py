@@ -2,16 +2,19 @@ from cmu_112_graphics import *
 import time,random
 
 def appStarted(app):
+    init(app)
+
+def init(app):
     app.mousePress = False
     app.blade = list()
     
     #app.startpos = None
     app.t0,app.t1 = 0,0
-    app.color = [0,0,0]
     app.bladeTime = 0
     app.bladeMaxLength = 80 #pixel length of blade
     app.bladeMaxWidth = 5
     app.bladeColor = None
+
 
 def mousePressed(app, event):
     if (not app.mousePress):
@@ -19,14 +22,16 @@ def mousePressed(app, event):
         #app.startpos = (event.x, event.y)
         #app.blade.append(app.startpos)
         app.t0 = time.time()
-        for i in range(3):
-            app.color[i] = random.randint(0,255)
-        #app.bladeColor = rgbString(app.color[0],app.color[1],app.color[2])
+
     print(event.x,event.y)
 
 def mouseReleased(app, event):
     app.mousePress = False
+    resetBladeCount(app,event)
+
+def resetBladeCount(app,event):
     app.bladeCounter = 0
+
 
 def mouseDragged(app,event):
     app.lastMouseX, app.lastMouseY = event.x, event.y
@@ -34,13 +39,20 @@ def mouseDragged(app,event):
         #app.t1 = time.time()
         #app.bladeCounter += 1
         x1,y1 = (event.x,event.y)
-        app.blade.insert(0,(x1,y1))
+        insertBlade(app,0,(x1,y1))
+
+
+def insertBlade(app,index,coord):
+       app.blade.insert(index,coord) # just for the blade here
         
 def timerFired(app):
     app.timerDelay = 20
     doStep(app)       
             
 def doStep(app):
+    stepBlade(app)
+ 
+def stepBlade(app):
     app.bladeTime += 1
     fillExtraPoints(app.blade)# BROKEN
     lengthUsed = 0
@@ -90,6 +102,9 @@ def rgbString(r, g, b):
     return f'#{r:02x}{g:02x}{b:02x}'
 
 def redrawAll(app, canvas):
+    drawBlade(app,canvas)
+
+def drawBlade(app,canvas):
     split = 0.3
     splitIndex = int(len(app.blade)*split)
     maxSize = app.bladeMaxWidth
@@ -114,5 +129,6 @@ def redrawAll(app, canvas):
         canvas.create_oval(x-s,y-s,x+s,y+s,
         fill = "black",outline = '')
         canvas.create_line(x,y,x1,y1, width=2*s, fill = app.bladeColor)
+
 
 runApp(width=512, height=512)
