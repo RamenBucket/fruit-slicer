@@ -91,6 +91,7 @@ def calculateSlicePolygons(app):
         intercept = (y0) - (slope*x0)
         topPolygonList.extend(getIntercepts(app,slope,intercept))
         bottomPolygonList.extend(getIntercepts(app,slope,intercept))
+
         
         for xEnd,yEnd in [(0,0),(app.width,0),
                           (app.width,app.height),
@@ -104,7 +105,7 @@ def calculateSlicePolygons(app):
     return orderClockwise(topPolygonList), orderClockwise(bottomPolygonList)
 
 def extendInDirection(app,x,y,dx,dy,direction):
-    while (x<=app.height and y<=app.width and x>=0 and y>=0):
+    while (x<=app.width and y<=app.height and x>=0 and y>=0):
         x+=dx*direction
         y+=dy*direction
     return (x,y)
@@ -127,7 +128,7 @@ def getIntercepts(app,slope,intercept):
     return result
 
 def redrawAll(app, canvas):
-    sliceTop = []
+    """ sliceTop = []
     for x,y in app.sliceTopPolygon:
         sliceTop.append(x)
         sliceTop.append(y)
@@ -137,7 +138,7 @@ def redrawAll(app, canvas):
     for x,y in app.sliceBottomPolygon:
         sliceBottom.append(x)
         sliceBottom.append(y)
-    canvas.create_polygon(sliceBottom,fill='red')
+    canvas.create_polygon(sliceBottom,fill='red') """
 
     """ for fruit in app.fruitList:
         drawList = []
