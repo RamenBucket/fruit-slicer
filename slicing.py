@@ -105,7 +105,7 @@ def calculateSlicePolygons(app):
     return orderClockwise(topPolygonList), orderClockwise(bottomPolygonList)
 
 def extendInDirection(app,x,y,dx,dy,direction):
-    while (x<=app.height and y<=app.width and x>=0 and y>=0):
+    while (x<=app.width and y<=app.height and x>=0 and y>=0):
         x+=dx*direction
         y+=dy*direction
     return (x,y)
