@@ -10,7 +10,7 @@ def orderClockwise(points): #jarvis
 
     while(True):
         Hull.append(points[pointOnHull])
-        print(Hull)
+        #print(Hull)  printing
         currPoint = (pointOnHull+1)%len(points)
         for i in range(len(points)):
             if (calculateOrientation(points[pointOnHull],points[i],points[currPoint]) == 2):
@@ -18,7 +18,6 @@ def orderClockwise(points): #jarvis
         pointOnHull = currPoint
         if (pointOnHull == leftPoint): #when we found all points
             break 
-    Hull.reverse()
     return Hull
 
 def calculateOrientation(p,q,r): # 0  if colinear, 1 if clockwise, 2 if counterclockwise
