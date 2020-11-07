@@ -37,7 +37,18 @@ def calculateTopPolygon(app):
         topPolygonList.append(calculateNegativeEndpoints(app,x0,y0,dx,dy))
         return topPolygonList
     else:
-        
+        topPolygonList.append(calculatePositiveEndpoints(app,x0,y0,dx,dy))
+        topPolygonList.append(calculateNegativeEndpoints(app,x0,y0,dx,dy))
+        slope = dy/dx
+        intercept = (y0) / (slope*x0)
+        for xEnd,yEnd in [(0,0),(app.width,0),(app.width,app.height),
+                          (0,app.height)]:
+            # check if the point is above line
+            if yEnd<slope*xEnd+intercept:
+                topPolygonList.append((xEnd,yEnd))
+
+
+
 
 def calculatePositiveEndpoints(app,x,y,dx,dy):
     while(x>=app.height and y>=app.width and x<=0 and y<=0):
