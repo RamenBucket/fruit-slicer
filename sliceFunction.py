@@ -1,5 +1,6 @@
 from orderClockwise import orderClockwise
 from clipping import clip
+import intersectLine
 
 def slicePoly(polyList, mousePoint1, mousePoint2, w, h):
     topPoly, bottomPoly = calculateSlicePolygons(mousePoint1, 
@@ -80,4 +81,18 @@ def getIntercepts(slope,intercept,width,height):
     return result
 
 def sliceIntersectsPolygon(polyList, mousePoint1, mousePoint2):
-    pass
+    x3,y3 = mousePoint1
+    x4,y4 = mousePoint2
+    p2 = Point(x3,y3)
+    q2 = Point(x4,y4)
+    for i in range(len(polyList)):
+        point1 = polyList[i]
+        point2 = polylist[(i+1)%len(polyList)]
+        
+        x1,y1 = point1
+        x2,y2 = point2
+        p1 = Point(x1,y1)
+        q1 = Point(x2,y2)
+        if doIntersect(p1,q1,p2,q2):
+            return True
+    return False
