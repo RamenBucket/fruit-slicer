@@ -78,3 +78,6 @@ def getIntercepts(slope,intercept,width,height):
         if x>=0 and y>=0 and x<=width and y<=height:
             result.append((x,y))
     return result
+
+def sliceIntersectsPolygon(polyList, mousePoint1, mousePoint2):
+    pass

@@ -66,9 +66,9 @@ class Fruit(object):
             points2[i] = (pX - xShift2, pY - yShift2)
 
         #Compute velocity direction
-        (cutX0, cutY0), (cutX1, cutY1) = p0, p1
         velSlope = 0
         try:
+            (cutX0, cutY0), (cutX1, cutY1) = p0, p1
             cutSlope = (cutY1-cutY0)/(cutX1-cutX0)
             velSlope = -1/cutSlope #perpendicular
         except:
@@ -87,8 +87,8 @@ class Fruit(object):
             vel1 = (vx-dvx, vy-dvy) 
             vel2 = (vx+dvx, vy+dvy)
 
-        f1 = Fruit(points1,pos1,vel1,self.fruitType,self.uncut)
-        f2 = Fruit(points2,pos2,vel2,self.fruitType,self.uncut)
+        f1 = Fruit(points1,pos1,vel1,self.fruitType,False)
+        f2 = Fruit(points2,pos2,vel2,self.fruitType,False)
         return (f1, f2)
 
     def move(self, grav): #grav = pixels/frame, pre-calculated
