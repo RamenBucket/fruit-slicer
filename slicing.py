@@ -3,10 +3,24 @@ from cmu_112_graphics import *
 def appStarted(app):
     app.polygonList = [(50,50),(100,50),(100,100),(50,100)]
     app.slicepolygon = [(0,75),(500,75),(500,500),(0,500)]
+    app.slice=[None,None]
     
 
 def mousePressed(app, event):
     app.polygonList = clip(app.polygonList, app.slicepolygon)
+    start = (event.x, event.y)
+    app.slice[0] = start
+
+def mouseReleased(app, event):
+    end = (event.x, event.y)
+    app.slice[1] = end
+    print(app.slice)
+
+def calculateTopPolygon(app):
+    (x0,y0) = app.slice[0]
+    (x1,y1) = app.slice[1]
+    dx = abs(x1 - x0)
+    dy = abs(y1 - y0)
 
 def redrawAll(app, canvas):
     polygonDrawList = []
@@ -20,9 +34,6 @@ def redrawAll(app, canvas):
 def clip(subjectPolygon, clipPolygon):
     def inside(p):
         return(cp2[0]-cp1[0])*(p[1]-cp1[1]) > (cp2[1]-cp1[1])*(p[0]-cp1[0])
-   
-    def above(p):
-        pass
 
     def computeIntersection():
         dc = [ cp1[0] - cp2[0], cp1[1] - cp2[1] ]
