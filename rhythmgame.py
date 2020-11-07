@@ -5,7 +5,7 @@ print('Ricky was here')
 
 #beatmap = open("beatmap.txt", "r")
 
-from 
+from cmu_112_graphics import *
 
 def readfile(path):
     with open(path,'rt') as f:
