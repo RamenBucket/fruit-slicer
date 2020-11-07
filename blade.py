@@ -1,8 +1,6 @@
 from cmu_112_graphics import *
 import time,random
 
-def appStarted(app):
-    init(app)
 
 def init(app):
     app.mousePress = False
@@ -16,41 +14,15 @@ def init(app):
     app.bladeColor = None
 
 
-def mousePressed(app, event):
-    if (not app.mousePress):
-        app.mousePress = True
-        #app.startpos = (event.x, event.y)
-        #app.blade.append(app.startpos)
-        app.t0 = time.time()
-
-    print(event.x,event.y)
-
-def mouseReleased(app, event):
-    app.mousePress = False
-    resetBladeCount(app,event)
 
 def resetBladeCount(app,event):
     app.bladeCounter = 0
 
 
-def mouseDragged(app,event):
-    app.lastMouseX, app.lastMouseY = event.x, event.y
-    if (app.mousePress):
-        #app.t1 = time.time()
-        #app.bladeCounter += 1
-        x1,y1 = (event.x,event.y)
-        insertBlade(app,0,(x1,y1))
-
 
 def insertBlade(app,index,coord):
        app.blade.insert(index,coord) # just for the blade here
         
-def timerFired(app):
-    app.timerDelay = 20
-    doStep(app)       
-            
-def doStep(app):
-    stepBlade(app)
  
 def stepBlade(app):
     app.bladeTime += 1
@@ -101,8 +73,6 @@ def rgbString(r, g, b):
     # it says to use hex (base 16) with two digits.
     return f'#{r:02x}{g:02x}{b:02x}'
 
-def redrawAll(app, canvas):
-    drawBlade(app,canvas)
 
 def drawBlade(app,canvas):
     split = 0.3
@@ -131,4 +101,3 @@ def drawBlade(app,canvas):
         canvas.create_line(x,y,x1,y1, width=2*s, fill = app.bladeColor)
 
 
-runApp(width=512, height=512)

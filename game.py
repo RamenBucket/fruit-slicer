@@ -1,12 +1,10 @@
-
-
 from cmu_112_graphics import *
 
 import orderClockwise
 import centroid
 import Fruit
 import blade
-import slicing
+#import slicing
 import time
 
 def appStarted(app):
@@ -41,15 +39,11 @@ def timerFired(app):
     app.timerDelay = 20
     doStep(app)       
             
-
 def doStep(app):
     blade.stepBlade(app)
 
 def redrawAll(app, canvas):
     blade.drawBlade(app,canvas)
-
-
-
 
 
 runApp(width=512, height=512)
