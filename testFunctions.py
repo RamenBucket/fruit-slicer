@@ -1,8 +1,11 @@
-
 from cmu_112_graphics import *
+
 import orderClockwise
 import centroid
 import Fruit
+import blade
+#import slicing
+import time
 
 def appStarted(app):
     app.fruits = []
@@ -11,11 +14,24 @@ def appStarted(app):
     app.fruits.append(f)
     app.sliced = False
 
+    blade.init(app)
+   
 def mousePressed(app, event):
+    bladeMouse(app, event)
+  
+
+def bladeMouse(app, event):
+    if (not app.mousePress):
+        app.mousePress = True
+        #app.startpos = (event.x, event.y)
+        #app.blade.append(app.startpos)
+        app.t0 = time.time()
+
+def fruitTest(app,p0,p1):
     if(not(app.sliced)):
         app.sliced = True
         print("oboi")
-        p0,p1 = (50,200),(300,250)
+        #p0,p1 = (220,100),(200,310)
         i = 0
         while i < len(app.fruits):
             f = app.fruits[i]
@@ -24,28 +40,49 @@ def mousePressed(app, event):
             app.fruits.insert(i,f2)
             app.fruits.insert(i,f1)
             i += 2
+    app.sliced = False
+
 
 def keyPressed(app, event):
     pass
 
 def mouseReleased(app, event):
-    pass
+    app.mousePress = False
+    blade.resetBladeCount(app,event)
+
+    print("blade:",app.blade)
+
+    first = app.blade[0]
+    last = app.blade[len(app.blade)-1]
+
+    print("first,last:",first,last)
+
+    fruitTest(app,first,last)
+
+
+
+
 
 def mouseDragged(app,event):
-    pass
+    app.lastMouseX, app.lastMouseY = event.x, event.y
+    if (app.mousePress):
+        #app.t1 = time.time()
+        #app.bladeCounter += 1
+        x1,y1 = (event.x,event.y)
+        blade.insertBlade(app,0,(x1,y1))
 
 def timerFired(app):
     app.timerDelay = 20
     doStep(app)       
             
-
 def doStep(app):
+    blade.stepBlade(app)
     for f in app.fruits:
         f.move(0)
 
 def redrawAll(app, canvas):
     drawFruits(app, canvas)
-    canvas.create_line(50,200,300,250)
+    blade.drawBlade(app,canvas)
 
 def drawFruits(app, canvas):
     for f in app.fruits:
@@ -53,9 +90,7 @@ def drawFruits(app, canvas):
         coords = Fruit.localToGlobal(f.points, cx,cy)
         canvas.create_polygon(coords, fill="",width=4, outline="black")
 
-
-
-runApp(width=512, height=512)
+runApp(width=1100, height=800)
 
 
     
