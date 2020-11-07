@@ -14,9 +14,9 @@ def mousePressed(app, event):
 def mouseReleased(app, event):
     end = (event.x, event.y)
     app.slice[1] = end
-    app.sliceTopPolygon, app.sliceBottomPolygon = calculatePolygons(app)
+    app.sliceTopPolygon, app.sliceBottomPolygon = calculateSlicePolygons(app)
 
-def calculatePolygons(app):
+def calculateSlicePolygons(app):
     (x0,y0) = app.slice[0]
     (x1,y1) = app.slice[1]
     dx = x1 - x0
