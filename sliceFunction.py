@@ -87,7 +87,7 @@ def sliceIntersectsPolygon(polyList, mousePoint1, mousePoint2):
     q2 = Point(x4,y4)
     for i in range(len(polyList)):
         point1 = polyList[i]
-        point2 = polylist[(i+1)%len(polyList)]
+        point2 = polyList[(i+1)%len(polyList)]
         
         x1,y1 = point1
         x2,y2 = point2
