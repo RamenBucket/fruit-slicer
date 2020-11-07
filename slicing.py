@@ -30,7 +30,7 @@ def mouseReleased(app, event):
     end = (event.x, event.y)
     app.slice[1] = end
     app.sliceTopPolygon, app.sliceBottomPolygon = calculateSlicePolygons(app)
-    if len(app.polygonList) > 3:
+    if len(app.polygonList) > 2:
         print(f"polygon:{app.polygonList}")
         print(f"clip:{app.sliceBottomPolygon}")
         app.polygonList = clip(app.polygonList, app.sliceBottomPolygon)
@@ -41,7 +41,7 @@ def mouseReleased(app, event):
 def slicePolygon(app, fruit):
     app.sliceTopPolygon, app.sliceBottomPolygon = calculateSlicePolygons(app)
     
-    if len(app.polygonList) > 3:
+    if len(app.polygonList) > 2:
         print(f"polygon:{app.polygonList}")
         print(f"clip:{app.sliceBottomPolygon}")
         app.polygonList = clip(app.polygonList, app.sliceBottomPolygon)
@@ -91,11 +91,6 @@ def calculateSlicePolygons(app):
         intercept = (y0) - (slope*x0)
         topPolygonList.extend(getIntercepts(app,slope,intercept))
         bottomPolygonList.extend(getIntercepts(app,slope,intercept))
-
-        # fix later wierd code below
-        topPolygonList.append((x0,y0))
-        bottomPolygonList.append((x0,y0))
-        ##################################
         
         for xEnd,yEnd in [(0,0),(app.width,0),
                           (app.width,app.height),
