@@ -1,4 +1,7 @@
+
 from cmu_112_graphics import *
+from shapely.geometry import Point
+from shapely.geometry.polygon import Polygon
 
 import orderClockwise
 import centroid
@@ -6,6 +9,11 @@ import Fruit
 import blade
 #import slicing
 import time
+
+
+point = Point(0.5, 0.5)
+polygon = Polygon([(0, 0), (0, 1), (1, 1), (1, 0)])
+print(polygon.contains(point))
 
 def appStarted(app):
     app.fruits = []
@@ -99,6 +107,7 @@ def drawFruits(app, canvas):
         (cx, cy) = f.pos
         coords = Fruit.localToGlobal(f.points, cx,cy)
         canvas.create_polygon(coords, fill="",width=4, outline="black")
+        canvas.create_oval(cx-5,cy-5,cx+5,cy+5,fill="red")
 
 runApp(width=1100, height=800)
 

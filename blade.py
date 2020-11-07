@@ -21,7 +21,7 @@ def insertBlade(app,index,coord):
         
 def stepBlade(app):
     app.bladeTime += 1
-    fillExtraPoints(app.blade)# BROKEN
+    #fillExtraPoints(app.blade)
     lengthUsed = 0
     i = 0
     #tempBladeLength = min(app.bladeMaxLength, app.bladeCounter*10)
