@@ -79,4 +79,5 @@ def getIntercepts(slope,intercept,width,height):
             result.append((x,y))
     return result
 
-def sliceIntersectsPolygon((polyList, mousePoint1, mousePoint2)
+def sliceIntersectsPolygon(polyList, mousePoint1, mousePoint2):
+    pass
