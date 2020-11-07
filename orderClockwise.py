@@ -21,7 +21,7 @@ def orderClockwise(points): #jarvis
     Hull.reverse()
     return Hull
 
-def calculateOrientation(p,q,r): # 0  if coliniar, 1 if clockwise, 2 if counterclockwise
+def calculateOrientation(p,q,r): # 0  if colinear, 1 if clockwise, 2 if counterclockwise
     orientation = ((q[1]-p[1]) * (r[0]-q[0])) - ((q[0]-p[0]) * (r[1]-q[1]))
     if(orientation == 0):
         return 0
