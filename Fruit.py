@@ -1,6 +1,7 @@
 import centroid
 import math
 import copy 
+import sliceFunction
 
 def getVelVectors(slope):
         vel = 2 #magnitude of velocity imparted
@@ -37,18 +38,17 @@ class Fruit(object):
         self.fruitType = fruitType
         self.uncut = uncut
     
-    def slice(p0, p1):
+    def slice(p0, p1, width, height):
         (x,y) = self.pos
-        (cutX0, cutY0), (cutX1, cutY1) = p0, p1
-
+        
         #convert points to global, slice, convert back to local
         globPoints = localToGlobal(self.points,x,y)
-
-        (points1, points2) = None #output of daniel's function
-
+        
+        (points1, points2) = sliceFunction.slicePoly(self.points, p0, p1, 
+                                                    width, height)
         points1 = globalToLocal(points1,x,y) #points around old center
         points2 = globalToLocal(points2,x,y)
-
+        
         #shift new center of mass
         (xShift1, yShift1) = centroid.find_centroid(points1)
         (xShift2, yShift2) = centroid.find_centroid(points2)
@@ -65,9 +65,11 @@ class Fruit(object):
             (pX, pY) = points2[i]
             points2[i] = (pX - xShift2, pY - yShift2)
 
-        #Compute new velocities
+        #Compute velocity direction
+        (cutX0, cutY0), (cutX1, cutY1) = p0, p1
         cutSlope = (cutY1-cutY0)/(cutX1-cutX0)
         velSlope = -1/cutSlope #perpendicular
+
         #change velocities
         (dvx,dvy) = getVelVectors(velSlope) #change in velocity ,(dvx2,dvy2))
         (vx, vy) = self.vel #original velocity

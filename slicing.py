@@ -18,7 +18,6 @@ def appStarted(app):
     app.slice=[None,None]
 
 def mousePressed(app, event):
-    
     start = (event.x, event.y)
     app.slice[0] = start
 
