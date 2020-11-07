@@ -1,11 +1,19 @@
 from cmu_112_graphics import *
 from clockwiseOrder import clockwiseOrder
 from clipping import clip
+from Fruit import Fruit
+import centriod
 import copy
 
 def appStarted(app):
     app.polygonList = [(50,50),(app.width-50,50),
                        (app.width-50,app.height-50),(50,app.height-50)]
+    # fruit
+    app.fruitList = []
+    p=app.polygonList
+    testfruit = Fruit(p, tuple(find_Centroid(p)), (0,0), "orange", True)
+    app.fruitList.append(testfruit)
+
     app.sliceTopPolygon = [(0,75),(500,75),(500,500),(0,500)]
     app.sliceBottomPolygon = [(0,75),(500,75),(500,500),(0,500)]
     app.slice=[None,None]
@@ -116,13 +124,23 @@ def redrawAll(app, canvas):
         sliceBottom.append(x)
         sliceBottom.append(y)
     canvas.create_polygon(sliceBottom,fill='red')
+
+    for fruit in app.fruitList:
+        drawlist = []
+        for x,y in fruit.points:
+            drawList.append(x)
+            drawList.append(y)
+
+        if len(drawList)>=6:
+            canvas.create_polygon(polygonDrawList, color = 'orange')
+
     
-    polygonDrawList = []
+    """ polygonDrawList = []
     for x,y in app.polygonList:
         polygonDrawList.append(x)
         polygonDrawList.append(y)
 
-    if len(polygonDrawList)>2:
-        canvas.create_polygon(polygonDrawList)
+    if len(polygonDrawList)>5:
+        canvas.create_polygon(polygonDrawList) """
 
 runApp(width=512, height=512)
