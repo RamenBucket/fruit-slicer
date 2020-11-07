@@ -20,3 +20,5 @@ beatmapList = beatmap.readlines()
 beatmap.close()
 
 print(beatmapList)
+
+
