@@ -16,7 +16,6 @@ def mouseReleased(app, event):
     app.slice[1] = end
     app.sliceTopPolygon = calculateTopPolygon(app)
     app.sliceBottomPolygon = calculateBottomPolygon(app)
-    print (app.sliceBottomPolygon)
 
 def calculateTopPolygon(app):
     (x0,y0) = app.slice[0]
