@@ -41,10 +41,7 @@ def calculateTopPolygon(app):
         topPolygonList.append(extendPositive(app,x0,y0,dx,dy))
         topPolygonList.append(extendNegative(app,x0,y0,dx,dy))
         slope = (dy/dx)
-        print(f"s ={slope}")
-        # y = mx+b
         intercept = (y0) - (slope*x0)
-        print (f"i ={intercept}")
         for xEnd,yEnd in [(0,0),(app.width,0),(app.width,app.height),
                           (0,app.height)]:
             # check if the point is above line
