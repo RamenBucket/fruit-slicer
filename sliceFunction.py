@@ -4,6 +4,8 @@ from clipping import clip
 def slicePoly(polyList, mousePoint1, mousePoint2, w, h):
     topPoly, bottomPoly = calculateSlicePolygons(mousePoint1, 
                                                  mousePoint2, w, h)
+    print(f"t = {topPoly}")
+    print(f"b = {bottomPoly}")
     poly1 = clip(polyList, topPoly)
     poly2 = clip(polyList, bottomPoly)
     return poly1, poly2
