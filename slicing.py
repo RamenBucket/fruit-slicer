@@ -14,7 +14,8 @@ def mousePressed(app, event):
 def mouseReleased(app, event):
     end = (event.x, event.y)
     app.slice[1] = end
-    print(app.slice)
+    app.slicePolygon = calculateTopPolygon(app)
+    print (app.slicePolygon)
 
 def calculateTopPolygon(app):
     (x0,y0) = app.slice[0]
@@ -39,7 +40,7 @@ def calculateTopPolygon(app):
     else:
         topPolygonList.append(calculatePositiveEndpoints(app,x0,y0,dx,dy))
         topPolygonList.append(calculateNegativeEndpoints(app,x0,y0,dx,dy))
-        slope = dy/dx
+        slope = -1*(dy/dx)
         intercept = (y0) / (slope*x0)
         for xEnd,yEnd in [(0,0),(app.width,0),(app.width,app.height),
                           (0,app.height)]:
@@ -49,13 +50,13 @@ def calculateTopPolygon(app):
         return topPolygonList
 
 def calculatePositiveEndpoints(app,x,y,dx,dy):
-    while(x>=app.height and y>=app.width and x<=0 and y<=0):
+    while (x<=app.height and y<=app.width and x>=0 and y>=0):
         x+=dx
         y+=dy
     return (x,y)
 
 def calculateNegativeEndpoints(app,x,y,dx,dy):
-    while(x>=app.height and y>=app.width and x<=0 and y<=0):
+    while (x<=app.height and y<=app.width and x>=0 and y>=0):
         x-=dx
         y-=dy
     return (x,y)
