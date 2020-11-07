@@ -9,7 +9,7 @@ import blade
 import random
 #import slicing
 import time
-
+import sliceFunction
 
 #point = Point(0.5, 0.5)
 #polygon = Polygon([(0, 0), (0, 1), (1, 1), (1, 0)])
@@ -73,13 +73,14 @@ def fruitTest(app):
         i = 0
         while i < len(app.fruits):
             f = app.fruits[i]
-            
+            '''
             if(sliceFunction.sliceIntersectsPolygon(f.points,p0,p1)):
                 (f1, f2) = f.slice(p0, p1, app.width,app.height)
                 app.fruits.pop(i)
                 app.fruits.insert(i,f2)
                 app.fruits.insert(i,f1)
                 i += 2
+            '''
 
 def keyPressed(app, event):
     pass
@@ -89,18 +90,20 @@ def mouseReleased(app, event):
     blade.resetBladeCount(app,event)
 
     #TEMPORARY
-    print("bruh")
     end = (event.x, event.y)
     app.slice[1] = end
     p0,p1 = app.slice[0], app.slice[1]
     i = 0
-    print("bruh")
     while i < len(app.fruits):
         f = app.fruits[i]
-        (f1, f2) = f.slice(p0, p1, app.width,app.height)
-        app.fruits.pop(i)
-        app.fruits.insert(i,f2)
-        app.fruits.insert(i,f1)
+        if(sliceFunction.sliceIntersectsPolygon(f.points,p0,p1)):
+            print("inside")
+            (f1, f2) = f.slice(p0, p1, app.width,app.height)
+            app.fruits.pop(i)
+            app.fruits.insert(i,f2)
+            app.fruits.insert(i,f1)
+        else:
+            print("outside")
         i += 2
 
 def mouseDragged(app,event):
