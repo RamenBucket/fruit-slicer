@@ -20,8 +20,8 @@ def mouseReleased(app, event):
 def calculateTopPolygon(app):
     (x0,y0) = app.slice[0]
     (x1,y1) = app.slice[1]
-    dx = abs(x1 - x0)
-    dy = abs(y1 - y0)
+    dx = x1 - x0
+    dy = y1 - y0
 
     topPolygonList = []
 
@@ -40,7 +40,7 @@ def calculateTopPolygon(app):
     else:
         topPolygonList.append(calculatePositiveEndpoints(app,x0,y0,dx,dy))
         topPolygonList.append(calculateNegativeEndpoints(app,x0,y0,dx,dy))
-        slope = -1*(dy/dx)
+        slope = (dy/dx)
         intercept = (y0) / (slope*x0)
         for xEnd,yEnd in [(0,0),(app.width,0),(app.width,app.height),
                           (0,app.height)]:
@@ -52,13 +52,13 @@ def calculateTopPolygon(app):
 def calculatePositiveEndpoints(app,x,y,dx,dy):
     while (x<=app.height and y<=app.width and x>=0 and y>=0):
         x+=dx
-        y-=dy
+        y+=dy
     return (x,y)
 
 def calculateNegativeEndpoints(app,x,y,dx,dy):
     while (x<=app.height and y<=app.width and x>=0 and y>=0):
         x-=dx
-        y+=dy
+        y-=dy
     return (x,y)
 
 def redrawAll(app, canvas):
