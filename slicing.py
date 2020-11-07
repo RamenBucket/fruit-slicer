@@ -2,12 +2,12 @@ from cmu_112_graphics import *
 
 def appStarted(app):
     app.polygonList = [(50,50),(100,50),(100,100),(50,100)]
-    app.slicepolygon = [(0,75),(500,75),(500,500),(0,500)]
+    app.slicePolygon = [(0,75),(500,75),(500,500),(0,500)]
     app.slice=[None,None]
     
 
 def mousePressed(app, event):
-    app.polygonList = clip(app.polygonList, app.slicepolygon)
+    
     start = (event.x, event.y)
     app.slice[0] = start
 
@@ -65,12 +65,19 @@ def extendNegative(app,x,y,dx,dy):
     return (x,y)
 
 def redrawAll(app, canvas):
+    slicePolygonDrawList = []
+    for x,y in app.slicePolygon:
+        slicePolygonDrawList.append(x)
+        slicePolygonDrawList.append(y)
+    canvas.create_polygon(slicePolygonDrawList,fill='blue')
+    
     polygonDrawList = []
     for x,y in app.polygonList:
         polygonDrawList.append(x)
         polygonDrawList.append(y)
-
     canvas.create_polygon(polygonDrawList)
+
+    
 
 # from http://rosettacode.org/wiki/Sutherland-Hodgman_polygon_clipping#Python
 def clip(subjectPolygon, clipPolygon):
