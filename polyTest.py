@@ -10,6 +10,7 @@ p2 = Point(24.976567, 60.1612500)
 coords = [(24.950899, 60.169158), (24.953492, 60.169158), (24.953510, 60.170104), (24.950958, 60.169990)]
 poly = Polygon(coords)
 
+print(p1.within(poly))
 '''
 from shapely.geometry import Point
 from shapely.geometry.polygon import Polygon
