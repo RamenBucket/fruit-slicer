@@ -8,3 +8,5 @@ beatmap = open("beatmap.txt", "r")
 beatmapList = beatmap.readlines()
 
 beatmap.close()
+
+print(beatmapList)
