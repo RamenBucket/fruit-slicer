@@ -5,6 +5,8 @@ print('Ricky was here')
 
 #beatmap = open("beatmap.txt", "r")
 
+from 
+
 def readfile(path):
     with open(path,'rt') as f:
         return f.read()
