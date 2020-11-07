@@ -59,7 +59,7 @@ def testOrdering():
 
     print(points)
     answer = orderClockwise(points) 
-    print(answer)
+    print("clockwise is:",answer)
     print("done")
 
 testOrdering()
