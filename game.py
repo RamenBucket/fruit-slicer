@@ -45,8 +45,7 @@ def doStep(app):
 def redrawAll(app, canvas):
     blade.drawBlade(app,canvas)
 
-
-runApp(width=512, height=512)
+runApp(width=1024, height=1024)
 
 
     
