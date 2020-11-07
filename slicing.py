@@ -1,5 +1,6 @@
 from cmu_112_graphics import *
 from clockwiseOrder import clockwiseOrder
+from clipping import clip
 import copy
 
 def appStarted(app):
@@ -14,11 +15,18 @@ def mousePressed(app, event):
     start = (event.x, event.y)
     app.slice[0] = start
 
+def keyPressed(app, event):
+    if event.key == 'q':
+        appStarted(app)
+
 def mouseReleased(app, event):
     end = (event.x, event.y)
     app.slice[1] = end
     app.sliceTopPolygon, app.sliceBottomPolygon = calculateSlicePolygons(app)
+    print(app.polygonList)
+    print(app.sliceBottomPolygon)
     if len(app.polygonList) > 2:
+        app.polygonList.insert(0, app.polygonList[0])
         app.polygonList = clip(copy.copy(app.polygonList), 
                                copy.copy(app.sliceBottomPolygon))
 
@@ -56,6 +64,12 @@ def calculateSlicePolygons(app):
         intercept = (y0) - (slope*x0)
         topPolygonList.extend(getIntercepts(app,slope,intercept))
         bottomPolygonList.extend(getIntercepts(app,slope,intercept))
+
+        # fix later wierd code below
+        topPolygonList.append((x0,y0))
+        bottomPolygonList.append((x0,y0))
+        ##################################
+        
         for xEnd,yEnd in [(0,0),(app.width,0),
                           (app.width,app.height),
                           (0,app.height)]:
@@ -65,7 +79,6 @@ def calculateSlicePolygons(app):
             else:
                 topPolygonList.append((xEnd,yEnd))
     
-    print(clockwiseOrder(topPolygonList))
     return clockwiseOrder(topPolygonList), clockwiseOrder(bottomPolygonList)
 
 def extendInDirection(app,x,y,dx,dy,direction):
@@ -109,41 +122,5 @@ def redrawAll(app, canvas):
         polygonDrawList.append(x)
         polygonDrawList.append(y)
     canvas.create_polygon(polygonDrawList)
-
-# from http://rosettacode.org/wiki/Sutherland-Hodgman_polygon_clipping#Python
-def clip(subjectPolygon, clipPolygon):
-    def inside(p):
-        return(cp2[0]-cp1[0])*(p[1]-cp1[1]) > (cp2[1]-cp1[1])*(p[0]-cp1[0])
-
-    def computeIntersection():
-        dc = [ cp1[0] - cp2[0], cp1[1] - cp2[1] ]
-        dp = [ s[0] - e[0], s[1] - e[1] ]
-        n1 = cp1[0] * cp2[1] - cp1[1] * cp2[0]
-        n2 = s[0] * e[1] - s[1] * e[0] 
-        n3 = 1.0 / (dc[0] * dp[1] - dc[1] * dp[0])
-        return [(n1*dp[0] - n2*dc[0]) * n3, (n1*dp[1] - n2*dc[1]) * n3]
- 
-    outputList = subjectPolygon
-    cp1 = clipPolygon[-1]
- 
-    for clipVertex in clipPolygon:
-        cp2 = clipVertex
-        inputList = outputList
-        outputList = []
-        print(inputList)
-        s = inputList[-1]
- 
-        for subjectVertex in inputList:
-            e = subjectVertex
-            if inside(e):
-                if not inside(s):
-                    outputList.append(computeIntersection())
-                outputList.append(e)
-            elif inside(s):
-                outputList.append(computeIntersection())
-            s = e
-        cp1 = cp2
-
-    return(outputList)
 
 runApp(width=512, height=512)
