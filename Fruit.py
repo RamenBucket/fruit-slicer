@@ -30,7 +30,7 @@ class Fruit(object):
 
         (x,y) = pos
         pos1 = (x+xShift1, y+yShift1) 
-        pos2 = (x+xShift2, y+yshift2)
+        pos2 = (x+xShift2, y+yShift2)
         
         #Shift points to new centers of masses
         for i in range(len(points1)):
@@ -50,6 +50,10 @@ class Fruit(object):
         (x,y) = pos
         pos = (x+dx, y+dy) #change position based on velocity
         vel = (dx, dy+grav) #gravitational acceleration
+
+
+#global to center of mass - each coordiinate is defined relative to the centroid
+# ex) centroid is (122,122) -- coordinates aree  (+1,-2),(-5,+7)
 
 fruits = set()
 
