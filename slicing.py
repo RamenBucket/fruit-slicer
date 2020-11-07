@@ -91,6 +91,7 @@ def calculateSlicePolygons(app):
         intercept = (y0) - (slope*x0)
         topPolygonList.extend(getIntercepts(app,slope,intercept))
         bottomPolygonList.extend(getIntercepts(app,slope,intercept))
+
         
         for xEnd,yEnd in [(0,0),(app.width,0),
                           (app.width,app.height),
