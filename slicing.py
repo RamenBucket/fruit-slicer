@@ -128,7 +128,7 @@ def getIntercepts(app,slope,intercept):
     return result
 
 def redrawAll(app, canvas):
-    sliceTop = []
+    """ sliceTop = []
     for x,y in app.sliceTopPolygon:
         sliceTop.append(x)
         sliceTop.append(y)
@@ -138,7 +138,7 @@ def redrawAll(app, canvas):
     for x,y in app.sliceBottomPolygon:
         sliceBottom.append(x)
         sliceBottom.append(y)
-    canvas.create_polygon(sliceBottom,fill='red')
+    canvas.create_polygon(sliceBottom,fill='red') """
 
     """ for fruit in app.fruitList:
         drawList = []
