@@ -1,4 +1,4 @@
-def find_Centroid(v): 
+def find_centroid(v): 
     ans = [0, 0] 
   
     n = len(v) 
@@ -35,7 +35,7 @@ def testCentroid():
         [ 3, -4 ], 
         [ 6, -7 ] ] 
     
-    ans = find_Centroid(vp) 
+    ans = find_centroid(vp) 
     
     print(round(ans[0], 12), ans[1]) 
 

@@ -38,7 +38,7 @@ class Fruit(object):
         self.fruitType = fruitType
         self.uncut = uncut
     
-    def slice(p0, p1, width, height):
+    def slice(self, p0, p1, width, height):
         (x,y) = self.pos
         
         #convert points to global, slice, convert back to local
@@ -68,7 +68,11 @@ class Fruit(object):
         #Compute velocity direction
         (cutX0, cutY0), (cutX1, cutY1) = p0, p1
         cutSlope = (cutY1-cutY0)/(cutX1-cutX0)
-        velSlope = -1/cutSlope #perpendicular
+        velSlope = 0
+        try:
+            velSlope = -1/cutSlope #perpendicular
+        except:
+            velSlope = 99999
 
         #change velocities
         (dvx,dvy) = getVelVectors(velSlope) #change in velocity ,(dvx2,dvy2))
@@ -84,11 +88,10 @@ class Fruit(object):
             vel2 = (vx+dvx, vy+dvy)
 
         f1 = Fruit(points1,pos1,vel1,self.fruitType,self.uncut)
-        f2 = Fruit(points1,pos1,vel2,self.fruitType,self.uncut)
+        f2 = Fruit(points2,pos2,vel2,self.fruitType,self.uncut)
         return (f1, f2)
 
     def move(self, grav): #grav = pixels/frame, pre-calculated
-        print("bruh")
         (dx, dy) = self.vel
         (x,y) = self.pos
         self.pos = (x+dx, y+dy) #change position based on velocity
