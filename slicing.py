@@ -11,7 +11,7 @@ def appStarted(app):
     app.fruitList = []
     p=app.polygonList
     testfruit = Fruit(p, (app.width/2,app.height/2), (0,0), "orange", True)
-    app.fruitList.append(testfruit)
+    app.fruitList+=[testfruit]
 
     app.sliceTopPolygon = [(0,75),(500,75),(500,500),(0,500)]
     app.sliceBottomPolygon = [(0,75),(500,75),(500,500),(0,500)]
@@ -35,22 +35,21 @@ def mouseReleased(app, event):
         app.polygonList = clip(app.polygonList, app.sliceBottomPolygon)
         print(f"polygon after:{app.polygonList}")
         print()
+
+    """ for fruit in app.fruitList:
+        slicePolygon(app, fruit) """
     
 
 def slicePolygon(app, fruit):
     app.sliceTopPolygon, app.sliceBottomPolygon = calculateSlicePolygons(app)
     
-    if len(app.polygonList) > 2:
-        print(f"polygon:{app.polygonList}")
-        print(f"clip:{app.sliceBottomPolygon}")
-        app.polygonList = clip(app.polygonList, app.sliceBottomPolygon)
-        print(f"polygon after:{app.polygonList}")
-        print()
-
-    fruit1 = (clip(fruit.points, app.sliceTopPolygon), fruit.pos, fruit.vel, 
-              fruit.fruitType, fruit.uncut)
-    fruit2 = (clip(fruit.points, app.sliceBottomPolygon), fruit.pos, fruit.vel, 
-              fruit.fruitType, fruit.uncut)
+    if len(fruit.points) > 2:
+        fruit1 = Fruit(clip(orderClockwise(fruit.points), 
+                            orderClockwise(app.sliceTopPolygon)), 
+                       fruit.pos, fruit.vel, fruit.fruitType, fruit.uncut)
+        fruit2 = Fruit(clip(orderClockwise(fruit.points), 
+                            orderClockwise(app.sliceBottomPolygon)), 
+                       fruit.pos, fruit.vel, fruit.fruitType, fruit.uncut)
 
     app.fruitList.remove(fruit)    
     app.fruitList.append(fruit1)   
@@ -146,7 +145,7 @@ def redrawAll(app, canvas):
             drawList.append(y)
 
         if len(drawList)>=6:
-            canvas.create_polygon(drawList, fill = 'orange') """
+            canvas.create_polygon(drawList, fill = 'orange', outline = "black") """
 
     
     polygonDrawList = []
@@ -155,6 +154,6 @@ def redrawAll(app, canvas):
         polygonDrawList.append(y)
 
     if len(polygonDrawList)>5:
-        canvas.create_polygon(polygonDrawList)
+        canvas.create_polygon(polygonDrawList, outline = "red", width = 5)
 
 runApp(width=512, height=512)
