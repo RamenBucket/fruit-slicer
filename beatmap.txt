@@ -1,3 +1,6 @@
 row,num,name,wtv
 1,0,beatmap,t
 2,1,tt,ttt
+this is a test
+line2
+line3
