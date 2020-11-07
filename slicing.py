@@ -70,14 +70,12 @@ def redrawAll(app, canvas):
         slicePolygonDrawList.append(x)
         slicePolygonDrawList.append(y)
     canvas.create_polygon(slicePolygonDrawList,fill='blue')
-    
+
     polygonDrawList = []
     for x,y in app.polygonList:
         polygonDrawList.append(x)
         polygonDrawList.append(y)
     canvas.create_polygon(polygonDrawList)
-
-    
 
 # from http://rosettacode.org/wiki/Sutherland-Hodgman_polygon_clipping#Python
 def clip(subjectPolygon, clipPolygon):
