@@ -1,13 +1,20 @@
 from cmu_112_graphics import *
 
 def appStarted(app):
-    pass
+    app.polygonList = [(50,50),(100,50),(100,100),(50,100)]
+    app.slicepolygon = [(0,75),(500,75),(500,500),(0,500)]
+    
 
 def mousePressed(app, event):
-    pass
+    app.polygonList = clip(app.polygonList, app.slicepolygon)
 
 def redrawAll(app, canvas):
-    pass
+    polygonDrawList = []
+    for x,y in app.polygonList:
+        polygonDrawList.append(x)
+        polygonDrawList.append(y)
+
+    canvas.create_polygon(polygonDrawList)
 
 # from http://rosettacode.org/wiki/Sutherland-Hodgman_polygon_clipping#Python
 def clip(subjectPolygon, clipPolygon):
@@ -43,4 +50,4 @@ def clip(subjectPolygon, clipPolygon):
       cp1 = cp2
    return(outputList)
 
-runapp(width=512, height=512)
+runApp(width=512, height=512)
