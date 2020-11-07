@@ -22,6 +22,35 @@ def calculateTopPolygon(app):
     dx = abs(x1 - x0)
     dy = abs(y1 - y0)
 
+    topPolygonList = []
+
+    if dx == 0:
+        topPolygonList.append((0,0))
+        topPolygonList.append((0,app.height))
+        topPolygonList.append(calculatePositiveEndpoints(app,x0,y0,dx,dy))
+        topPolygonList.append(calculateNegativeEndpoints(app,x0,y0,dx,dy))
+        return topPolygonList
+    elif dy == 0:
+        topPolygonList.append((0,0))
+        topPolygonList.append((app.width,0))
+        topPolygonList.append(calculatePositiveEndpoints(app,x0,y0,dx,dy))
+        topPolygonList.append(calculateNegativeEndpoints(app,x0,y0,dx,dy))
+        return topPolygonList
+    else:
+        
+
+def calculatePositiveEndpoints(app,x,y,dx,dy):
+    while(x>=app.height and y>=app.width and x<=0 and y<=0):
+        x+=dx
+        y+=dy
+    return (x,y)
+
+def calculateNegativeEndpoints(app,x,y,dx,dy):
+    while(x>=app.height and y>=app.width and x<=0 and y<=0):
+        x-=dx
+        y-=dy
+    return (x,y)
+
 def redrawAll(app, canvas):
     polygonDrawList = []
     for x,y in app.polygonList:
