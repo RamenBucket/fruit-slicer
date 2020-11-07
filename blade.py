@@ -13,17 +13,12 @@ def init(app):
     app.bladeMaxWidth = 5
     app.bladeColor = None
 
-
-
 def resetBladeCount(app,event):
     app.bladeCounter = 0
-
-
 
 def insertBlade(app,index,coord):
        app.blade.insert(index,coord) # just for the blade here
         
- 
 def stepBlade(app):
     app.bladeTime += 1
     fillExtraPoints(app.blade)# BROKEN
@@ -99,5 +94,3 @@ def drawBlade(app,canvas):
         canvas.create_oval(x-s,y-s,x+s,y+s,
         fill = "black",outline = '')
         canvas.create_line(x,y,x1,y1, width=2*s, fill = app.bladeColor)
-
-
