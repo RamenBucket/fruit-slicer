@@ -1,5 +1,6 @@
 from cmu_112_graphics import *
 from clockwiseOrder import clockwiseOrder
+import copy
 
 def appStarted(app):
     app.polygonList = [(50,50),(app.width-50,50),
@@ -18,7 +19,8 @@ def mouseReleased(app, event):
     app.slice[1] = end
     app.sliceTopPolygon, app.sliceBottomPolygon = calculateSlicePolygons(app)
     if len(app.polygonList) > 2:
-        app.polygonList = clip(app.polygonList, app.sliceTopPolygon)
+        app.polygonList = clip(copy.copy(app.polygonList), 
+                               copy.copy(app.sliceBottomPolygon))
 
 def calculateSlicePolygons(app):
     (x0,y0) = app.slice[0]
@@ -63,6 +65,7 @@ def calculateSlicePolygons(app):
             else:
                 topPolygonList.append((xEnd,yEnd))
     
+    print(clockwiseOrder(topPolygonList))
     return clockwiseOrder(topPolygonList), clockwiseOrder(bottomPolygonList)
 
 def extendInDirection(app,x,y,dx,dy,direction):
@@ -89,7 +92,7 @@ def getIntercepts(app,slope,intercept):
     return result
 
 def redrawAll(app, canvas):
-    """ sliceTop = []
+    sliceTop = []
     for x,y in app.sliceTopPolygon:
         sliceTop.append(x)
         sliceTop.append(y)
@@ -99,7 +102,7 @@ def redrawAll(app, canvas):
     for x,y in app.sliceBottomPolygon:
         sliceBottom.append(x)
         sliceBottom.append(y)
-    canvas.create_polygon(sliceBottom,fill='red') """
+    canvas.create_polygon(sliceBottom,fill='red')
     
     polygonDrawList = []
     for x,y in app.polygonList:
@@ -140,6 +143,7 @@ def clip(subjectPolygon, clipPolygon):
                 outputList.append(computeIntersection())
             s = e
         cp1 = cp2
+
     return(outputList)
 
 runApp(width=512, height=512)
