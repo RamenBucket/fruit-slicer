@@ -101,5 +101,8 @@ def testSliceIntersectsPolygon():
     polyList = [(50, 50), (462, 50), (462, 462), (50, 462)]
     mousePoint1, mousePoint2 = [(341, 14), (444, 15)]
     print(sliceIntersectsPolygon(polyList, mousePoint1, mousePoint2))
+    polyList = [(50, 50), (462, 50), (462, 462), (50, 462)]
+    mousePoint1, mousePoint2 = [(87, 23), (502, 345)]
+    print(sliceIntersectsPolygon(polyList, mousePoint1, mousePoint2))
 
 testSliceIntersectsPolygon()
