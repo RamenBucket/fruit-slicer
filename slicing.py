@@ -2,7 +2,8 @@ from cmu_112_graphics import *
 from clockwiseOrder import clockwiseOrder
 
 def appStarted(app):
-    app.polygonList = [(50,50),(100,50),(100,100),(50,100)]
+    app.polygonList = [(50,50),(app.width-50,50),
+                       (app.width-50,app.height-50),(50,app.height-50)]
     app.sliceTopPolygon = [(0,75),(500,75),(500,500),(0,500)]
     app.sliceBottomPolygon = [(0,75),(500,75),(500,500),(0,500)]
     app.slice=[None,None]
@@ -16,6 +17,8 @@ def mouseReleased(app, event):
     end = (event.x, event.y)
     app.slice[1] = end
     app.sliceTopPolygon, app.sliceBottomPolygon = calculateSlicePolygons(app)
+    if len(app.polygonList) > 2:
+        app.polygonList = clip(app.polygonList, app.sliceTopPolygon)
 
 def calculateSlicePolygons(app):
     (x0,y0) = app.slice[0]
@@ -60,10 +63,6 @@ def calculateSlicePolygons(app):
             else:
                 topPolygonList.append((xEnd,yEnd))
     
-    print(f"top: {topPolygonList}")
-    print(f"topc: {clockwiseOrder(topPolygonList)}")
-    print(f"bottom: {bottomPolygonList}")
-    print(f"bottomc: {clockwiseOrder(bottomPolygonList)}")
     return clockwiseOrder(topPolygonList), clockwiseOrder(bottomPolygonList)
 
 def extendInDirection(app,x,y,dx,dy,direction):
@@ -84,15 +83,13 @@ def getIntercepts(app,slope,intercept):
     pt4 = ((y1-intercept)/slope , y1)
 
     result = []
-
     for x,y in [pt1,pt2,pt3,pt4]:
         if x>=0 and y>=0 and x<=app.width and y<=app.height:
             result.append((x,y))
-
     return result
 
 def redrawAll(app, canvas):
-    sliceTop = []
+    """ sliceTop = []
     for x,y in app.sliceTopPolygon:
         sliceTop.append(x)
         sliceTop.append(y)
@@ -102,8 +99,8 @@ def redrawAll(app, canvas):
     for x,y in app.sliceBottomPolygon:
         sliceBottom.append(x)
         sliceBottom.append(y)
-    canvas.create_polygon(sliceBottom,fill='red')
-
+    canvas.create_polygon(sliceBottom,fill='red') """
+    
     polygonDrawList = []
     for x,y in app.polygonList:
         polygonDrawList.append(x)
@@ -130,6 +127,7 @@ def clip(subjectPolygon, clipPolygon):
         cp2 = clipVertex
         inputList = outputList
         outputList = []
+        print(inputList)
         s = inputList[-1]
  
         for subjectVertex in inputList:

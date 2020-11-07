@@ -39,11 +39,11 @@ def clockwiseOrder(L):
     return clockwiseL
 
 
-polygonList1 = [(50,50),(50,100),(100,100),(100,50)]
+""" polygonList1 = [(50,50),(50,100),(100,100),(100,50)]
 polygonList2 = [(1.5,5),(1,1),(2.5,4),(3,1),(2,0)]
 polygonList3 = [(1,1),(5,6),(2,4),(1.5,2),(2,0),(3,0),(5,2),(5.5,4),(6,5)]
 polygonList4 = [(1,0),(1,-1),(-0.5,2),(0.5,4),(1.5,5),(3,3),(2,1)]
 print(clockwiseOrder(polygonList1))
 print(clockwiseOrder(polygonList2))
 print(clockwiseOrder(polygonList3))
-print(clockwiseOrder(polygonList4))
+print(clockwiseOrder(polygonList4)) """
