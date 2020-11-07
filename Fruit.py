@@ -87,16 +87,17 @@ class Fruit(object):
         f2 = Fruit(points1,pos1,vel2,self.fruitType,self.uncut)
         return (f1, f2)
 
-    def move(grav): #grav = pixels/frame, pre-calculated
-        (dx, dy) = vel
-        (x,y) = pos
-        pos = (x+dx, y+dy) #change position based on velocity
-        vel = (dx, dy+grav) #gravitational acceleration
+    def move(self, grav): #grav = pixels/frame, pre-calculated
+        print("bruh")
+        (dx, dy) = self.vel
+        (x,y) = self.pos
+        self.pos = (x+dx, y+dy) #change position based on velocity
+        self.vel = (dx, dy+grav) #gravitational acceleration
 
 #global to center of mass - each coordiinate is defined relative to the centroid
 # ex) centroid is (122,122) -- coordinates aree  (+1,-2),(-5,+7)
 
-fruits = set()
+#fruits = set()
 
-p = [(0,0),(1,0),(0,1),(1,1)]
-f = Fruit(p, (0,0), (5,6), "orange", True)
+#p = [(0,0),(1,0),(0,1),(1,1)]
+#f = Fruit(p, (0,0), (5,6), "orange", True)
