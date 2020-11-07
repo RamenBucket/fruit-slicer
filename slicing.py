@@ -28,19 +28,20 @@ def calculateTopPolygon(app):
     if dx == 0:
         topPolygonList.append((0,0))
         topPolygonList.append((0,app.height))
-        topPolygonList.append(calculatePositiveEndpoints(app,x0,y0,dx,dy))
-        topPolygonList.append(calculateNegativeEndpoints(app,x0,y0,dx,dy))
+        topPolygonList.append(extendPositive(app,x0,y0,dx,dy))
+        topPolygonList.append(extendNegative(app,x0,y0,dx,dy))
         return topPolygonList
     elif dy == 0:
         topPolygonList.append((0,0))
         topPolygonList.append((app.width,0))
-        topPolygonList.append(calculatePositiveEndpoints(app,x0,y0,dx,dy))
-        topPolygonList.append(calculateNegativeEndpoints(app,x0,y0,dx,dy))
+        topPolygonList.append(extendPositive(app,x0,y0,dx,dy))
+        topPolygonList.append(extendNegative(app,x0,y0,dx,dy))
         return topPolygonList
     else:
-        topPolygonList.append(calculatePositiveEndpoints(app,x0,y0,dx,dy))
-        topPolygonList.append(calculateNegativeEndpoints(app,x0,y0,dx,dy))
+        topPolygonList.append(extendPositive(app,x0,y0,dx,dy))
+        topPolygonList.append(extendNegative(app,x0,y0,dx,dy))
         slope = (dy/dx)
+        print(slope)
         intercept = (y0) / (slope*x0)
         for xEnd,yEnd in [(0,0),(app.width,0),(app.width,app.height),
                           (0,app.height)]:
@@ -49,13 +50,13 @@ def calculateTopPolygon(app):
                 topPolygonList.append((xEnd,yEnd))
         return topPolygonList
 
-def calculatePositiveEndpoints(app,x,y,dx,dy):
+def extendPositive(app,x,y,dx,dy):
     while (x<=app.height and y<=app.width and x>=0 and y>=0):
         x+=dx
         y+=dy
     return (x,y)
 
-def calculateNegativeEndpoints(app,x,y,dx,dy):
+def extendNegative(app,x,y,dx,dy):
     while (x<=app.height and y<=app.width and x>=0 and y>=0):
         x-=dx
         y-=dy
