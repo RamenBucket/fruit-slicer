@@ -77,7 +77,7 @@ def drawFruits(app, canvas):
         coords = Fruit.localToGlobal(f.points, cx,cy)
         canvas.create_polygon(coords, fill="",width=4, outline="black")
 
-runApp(width=1024, height=1024)
+runApp(width=1100, height=800)
 
 
     
