@@ -35,20 +35,23 @@ def getFruit():
     return (fruitTypes[i],fruitOutlines[i])
 
 def appStarted(app):
+    initFruits(app)
+
+    blade.init(app)
+    #TEMPORARY!!!
+    app.slice=[None,None]
+
+def initFruits(app):
     app.fruits = []
     #p = [(-50,0),(-35,35),(0,50),(35,35),(50,0),(35,-35),(0,-50),(-35,-35)]
     (f, outline) = getFruit()
-    f0 = Fruit.Fruit(outline, (200,200), (0,0), f, True)
-    f1 = Fruit.Fruit(outline, (500,600), (0,0), f, True)
-    f2 = Fruit.Fruit(outline, (700,300), (0,0), f, True)
+    f0 = Fruit.Fruit(outline, (200,200), (0,-10), f, True)
+    f1 = Fruit.Fruit(outline, (500,600), (0,-10), f, True)
+    f2 = Fruit.Fruit(outline, (700,300), (0,-10), f, True)
     #app.fruits.append(f0)
     app.fruits.extend([f0,f1,f2])
     app.sliced = False
-
-    blade.init(app)
-
-    #TEMPORARY!!!
-    app.slice=[None,None]
+    app.grav = 0.2
 
 def mousePressed(app, event):
     bladeMouse(app, event)
@@ -79,18 +82,14 @@ def mouseReleased(app, event):
     i = 0
     while i < len(app.fruits):
         f = app.fruits[i]
-        print("SLICE TEST:", f.points, p0, p1)
         (x,y) = f.pos
         globPoints = Fruit.localToGlobal(f.points, x, y)
         if(sliceFunction.sliceIntersectsPolygon(globPoints,p0,p1)):
-            print("inside")
             (f1, f2) = f.slice(p0, p1, app.width,app.height)
             app.fruits.pop(i)
             app.fruits.insert(i,f2)
             app.fruits.insert(i,f1)
             i += 1
-        else:
-            print("outside")
         i += 1
 
 def mouseDragged(app,event):
@@ -102,13 +101,13 @@ def mouseDragged(app,event):
         blade.insertBlade(app,0,(x1,y1))
 
 def timerFired(app):
-    app.timerDelay = 20
+    app.timerDelay = 10
     doStep(app)       
             
 def doStep(app):
     blade.stepBlade(app)
     for f in app.fruits:
-        f.move(0)
+        f.move(app.grav)
 
 def redrawAll(app, canvas):
     drawFruits(app, canvas)
