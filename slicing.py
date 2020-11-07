@@ -1,8 +1,7 @@
 from cmu_112_graphics import *
-from clockwiseOrder import clockwiseOrder
+from orderClockwise import orderClockwise
 from clipping import clip
 from Fruit import Fruit
-import centriod
 import copy
 
 def appStarted(app):
@@ -11,7 +10,7 @@ def appStarted(app):
     # fruit
     app.fruitList = []
     p=app.polygonList
-    testfruit = Fruit(p, tuple(find_Centroid(p)), (0,0), "orange", True)
+    testfruit = Fruit(p, (app.width/2,app.height/2), (0,0), "orange", True)
     app.fruitList.append(testfruit)
 
     app.sliceTopPolygon = [(0,75),(500,75),(500,500),(0,500)]
@@ -37,6 +36,26 @@ def mouseReleased(app, event):
         app.polygonList = clip(app.polygonList, app.sliceBottomPolygon)
         print(f"polygon after:{app.polygonList}")
         print()
+    
+
+def slicePolygon(app, fruit):
+    app.sliceTopPolygon, app.sliceBottomPolygon = calculateSlicePolygons(app)
+    
+    if len(app.polygonList) > 3:
+        print(f"polygon:{app.polygonList}")
+        print(f"clip:{app.sliceBottomPolygon}")
+        app.polygonList = clip(app.polygonList, app.sliceBottomPolygon)
+        print(f"polygon after:{app.polygonList}")
+        print()
+
+    fruit1 = (clip(fruit.points, app.sliceTopPolygon), fruit.pos, fruit.vel, 
+              fruit.fruitType, fruit.uncut)
+    fruit2 = (clip(fruit.points, app.sliceBottomPolygon), fruit.pos, fruit.vel, 
+              fruit.fruitType, fruit.uncut)
+
+    app.fruitList.remove(fruit)    
+    app.fruitList.append(fruit1)   
+    app.fruitList.append(fruit2) 
 
 def calculateSlicePolygons(app):
     (x0,y0) = app.slice[0]
@@ -87,7 +106,7 @@ def calculateSlicePolygons(app):
             else:
                 topPolygonList.append((xEnd,yEnd))
     
-    return clockwiseOrder(topPolygonList), clockwiseOrder(bottomPolygonList)
+    return orderClockwise(topPolygonList), orderClockwise(bottomPolygonList)
 
 def extendInDirection(app,x,y,dx,dy,direction):
     while (x<=app.height and y<=app.width and x>=0 and y>=0):
@@ -125,22 +144,22 @@ def redrawAll(app, canvas):
         sliceBottom.append(y)
     canvas.create_polygon(sliceBottom,fill='red')
 
-    for fruit in app.fruitList:
-        drawlist = []
+    """ for fruit in app.fruitList:
+        drawList = []
         for x,y in fruit.points:
             drawList.append(x)
             drawList.append(y)
 
         if len(drawList)>=6:
-            canvas.create_polygon(polygonDrawList, color = 'orange')
+            canvas.create_polygon(drawList, fill = 'orange') """
 
     
-    """ polygonDrawList = []
+    polygonDrawList = []
     for x,y in app.polygonList:
         polygonDrawList.append(x)
         polygonDrawList.append(y)
 
     if len(polygonDrawList)>5:
-        canvas.create_polygon(polygonDrawList) """
+        canvas.create_polygon(polygonDrawList)
 
 runApp(width=512, height=512)
