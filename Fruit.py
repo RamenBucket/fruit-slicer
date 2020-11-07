@@ -67,9 +67,9 @@ class Fruit(object):
 
         #Compute velocity direction
         (cutX0, cutY0), (cutX1, cutY1) = p0, p1
-        cutSlope = (cutY1-cutY0)/(cutX1-cutX0)
         velSlope = 0
         try:
+            cutSlope = (cutY1-cutY0)/(cutX1-cutX0)
             velSlope = -1/cutSlope #perpendicular
         except:
             velSlope = 99999
