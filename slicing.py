@@ -47,9 +47,6 @@ def calculateTopPolygon(app):
             if yEnd<slope*xEnd+intercept:
                 topPolygonList.append((xEnd,yEnd))
 
-
-
-
 def calculatePositiveEndpoints(app,x,y,dx,dy):
     while(x>=app.height and y>=app.width and x<=0 and y<=0):
         x+=dx
