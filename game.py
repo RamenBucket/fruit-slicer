@@ -39,10 +39,10 @@ def appStarted(app):
     #p = [(-50,0),(-35,35),(0,50),(35,35),(50,0),(35,-35),(0,-50),(-35,-35)]
     (f, outline) = getFruit()
     f0 = Fruit.Fruit(outline, (200,200), (0,0), f, True)
-    #f1 = Fruit.Fruit(p, (300,500), (0,0), "orange", True)
-    #f2 = Fruit.Fruit(p, (600,700), (0,0), "orange", True)
-    app.fruits.append(f0)
-    #app.fruits.extend([f0,f1,f2])
+    f1 = Fruit.Fruit(outline, (500,600), (0,0), f, True)
+    f2 = Fruit.Fruit(outline, (700,300), (0,0), f, True)
+    #app.fruits.append(f0)
+    app.fruits.extend([f0,f1,f2])
     app.sliced = False
 
     blade.init(app)
@@ -79,15 +79,19 @@ def mouseReleased(app, event):
     i = 0
     while i < len(app.fruits):
         f = app.fruits[i]
-        if(True):#sliceFunction.sliceIntersectsPolygon(f.points,p0,p1)):
+        print("SLICE TEST:", f.points, p0, p1)
+        (x,y) = f.pos
+        globPoints = Fruit.localToGlobal(f.points, x, y)
+        if(sliceFunction.sliceIntersectsPolygon(globPoints,p0,p1)):
             print("inside")
             (f1, f2) = f.slice(p0, p1, app.width,app.height)
             app.fruits.pop(i)
             app.fruits.insert(i,f2)
             app.fruits.insert(i,f1)
+            i += 1
         else:
             print("outside")
-        i += 2
+        i += 1
 
 def mouseDragged(app,event):
     app.lastMouseX, app.lastMouseY = event.x, event.y
