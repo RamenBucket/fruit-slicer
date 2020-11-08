@@ -1,4 +1,4 @@
-def find_Centroid(v): 
+def find_centroid(v): 
     ans = [0, 0] 
   
     n = len(v) 
@@ -27,14 +27,16 @@ def find_Centroid(v):
     ans[1] = (ans[1]) / (6 * signedArea) 
   
     return ans 
-  
-# Driver code 
-  
-# Coordinate of the vertices 
-vp = [ [ 1, 2 ], 
-       [ 3, -4 ], 
-       [ 6, -7 ] ] 
-  
-ans = find_Centroid(vp) 
-  
-print(round(ans[0], 12), ans[1]) 
+
+
+
+def testCentroid():
+    vp = [ [ 1, 2 ], 
+        [ 3, -4 ], 
+        [ 6, -7 ] ] 
+    
+    ans = find_centroid(vp) 
+    
+    print(round(ans[0], 12), ans[1]) 
+
+testCentroid()

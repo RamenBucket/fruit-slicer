@@ -1,8 +1,18 @@
 from cmu_112_graphics import *
-from clockwiseOrder import clockwiseOrder
+from orderClockwise import orderClockwise
+from clipping import clip
+from Fruit import Fruit
+import copy
 
 def appStarted(app):
-    app.polygonList = [(50,50),(100,50),(100,100),(50,100)]
+    app.polygonList = [(50,50),(app.width-50,50),
+                       (app.width-50,app.height-50),(50,app.height-50)]
+    # fruit
+    app.fruitList = []
+    p=app.polygonList
+    testfruit = Fruit(p, (app.width/2,app.height/2), (0,0), "orange", True)
+    app.fruitList+=[testfruit]
+
     app.sliceTopPolygon = [(0,75),(500,75),(500,500),(0,500)]
     app.sliceBottomPolygon = [(0,75),(500,75),(500,500),(0,500)]
     app.slice=[None,None]
@@ -12,10 +22,33 @@ def mousePressed(app, event):
     start = (event.x, event.y)
     app.slice[0] = start
 
+def keyPressed(app, event):
+    if event.key == 'q':
+        appStarted(app)
+
 def mouseReleased(app, event):
     end = (event.x, event.y)
     app.slice[1] = end
     app.sliceTopPolygon, app.sliceBottomPolygon = calculateSlicePolygons(app)
+
+    """ for fruit in app.fruitList:
+        slicePolygon(app, fruit) """
+    
+
+def slicePolygon(app, fruit):
+    app.sliceTopPolygon, app.sliceBottomPolygon = calculateSlicePolygons(app)
+    
+    if len(fruit.points) > 2:
+        fruit1 = Fruit(clip(orderClockwise(fruit.points), 
+                            orderClockwise(app.sliceTopPolygon)), 
+                       fruit.pos, fruit.vel, fruit.fruitType, fruit.uncut)
+        fruit2 = Fruit(clip(orderClockwise(fruit.points), 
+                            orderClockwise(app.sliceBottomPolygon)), 
+                       fruit.pos, fruit.vel, fruit.fruitType, fruit.uncut)
+
+    app.fruitList.remove(fruit)    
+    app.fruitList.append(fruit1)   
+    app.fruitList.append(fruit2) 
 
 def calculateSlicePolygons(app):
     (x0,y0) = app.slice[0]
@@ -51,6 +84,8 @@ def calculateSlicePolygons(app):
         intercept = (y0) - (slope*x0)
         topPolygonList.extend(getIntercepts(app,slope,intercept))
         bottomPolygonList.extend(getIntercepts(app,slope,intercept))
+
+        
         for xEnd,yEnd in [(0,0),(app.width,0),
                           (app.width,app.height),
                           (0,app.height)]:
@@ -60,21 +95,17 @@ def calculateSlicePolygons(app):
             else:
                 topPolygonList.append((xEnd,yEnd))
     
-    print(f"top: {topPolygonList}")
-    print(f"topc: {clockwiseOrder(topPolygonList)}")
-    print(f"bottom: {bottomPolygonList}")
-    print(f"bottomc: {clockwiseOrder(bottomPolygonList)}")
-    return clockwiseOrder(topPolygonList), clockwiseOrder(bottomPolygonList)
+    return orderClockwise(topPolygonList), orderClockwise(bottomPolygonList)
 
 def extendInDirection(app,x,y,dx,dy,direction):
-    while (x<=app.height and y<=app.width and x>=0 and y>=0):
+    while (x<=app.width and y<=app.height and x>=0 and y>=0):
         x+=dx*direction
         y+=dy*direction
     return (x,y)
 
 def getIntercepts(app,slope,intercept):
-    x0=1
-    y0=1
+    x0=0
+    y0=0
     x1=app.width
     y1=app.height
 
@@ -84,15 +115,13 @@ def getIntercepts(app,slope,intercept):
     pt4 = ((y1-intercept)/slope , y1)
 
     result = []
-
     for x,y in [pt1,pt2,pt3,pt4]:
         if x>=0 and y>=0 and x<=app.width and y<=app.height:
             result.append((x,y))
-
     return result
 
 def redrawAll(app, canvas):
-    sliceTop = []
+    """ sliceTop = []
     for x,y in app.sliceTopPolygon:
         sliceTop.append(x)
         sliceTop.append(y)
@@ -102,46 +131,24 @@ def redrawAll(app, canvas):
     for x,y in app.sliceBottomPolygon:
         sliceBottom.append(x)
         sliceBottom.append(y)
-    canvas.create_polygon(sliceBottom,fill='red')
+    canvas.create_polygon(sliceBottom,fill='red') """
 
+    """ for fruit in app.fruitList:
+        drawList = []
+        for x,y in fruit.points:
+            drawList.append(x)
+            drawList.append(y)
+
+        if len(drawList)>=6:
+            canvas.create_polygon(drawList, fill = 'orange', outline = "black") """
+
+    
     polygonDrawList = []
     for x,y in app.polygonList:
         polygonDrawList.append(x)
         polygonDrawList.append(y)
-    canvas.create_polygon(polygonDrawList)
 
-# from http://rosettacode.org/wiki/Sutherland-Hodgman_polygon_clipping#Python
-def clip(subjectPolygon, clipPolygon):
-    def inside(p):
-        return(cp2[0]-cp1[0])*(p[1]-cp1[1]) > (cp2[1]-cp1[1])*(p[0]-cp1[0])
-
-    def computeIntersection():
-        dc = [ cp1[0] - cp2[0], cp1[1] - cp2[1] ]
-        dp = [ s[0] - e[0], s[1] - e[1] ]
-        n1 = cp1[0] * cp2[1] - cp1[1] * cp2[0]
-        n2 = s[0] * e[1] - s[1] * e[0] 
-        n3 = 1.0 / (dc[0] * dp[1] - dc[1] * dp[0])
-        return [(n1*dp[0] - n2*dc[0]) * n3, (n1*dp[1] - n2*dc[1]) * n3]
- 
-    outputList = subjectPolygon
-    cp1 = clipPolygon[-1]
- 
-    for clipVertex in clipPolygon:
-        cp2 = clipVertex
-        inputList = outputList
-        outputList = []
-        s = inputList[-1]
- 
-        for subjectVertex in inputList:
-            e = subjectVertex
-            if inside(e):
-                if not inside(s):
-                    outputList.append(computeIntersection())
-                outputList.append(e)
-            elif inside(s):
-                outputList.append(computeIntersection())
-            s = e
-        cp1 = cp2
-    return(outputList)
+    if len(polygonDrawList)>5:
+        canvas.create_polygon(polygonDrawList, outline = "red", width = 5)
 
 runApp(width=512, height=512)
