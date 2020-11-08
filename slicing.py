@@ -30,11 +30,6 @@ def mouseReleased(app, event):
     end = (event.x, event.y)
     app.slice[1] = end
     app.sliceTopPolygon, app.sliceBottomPolygon = calculateSlicePolygons(app)
-    if len(app.polygonList) > 2:
-        print(f"polygon:{app.polygonList}")
-        print(app.slice)
-        app.polygonList = clip(app.polygonList, app.sliceBottomPolygon)
-        print()
 
     """ for fruit in app.fruitList:
         slicePolygon(app, fruit) """

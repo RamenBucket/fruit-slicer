@@ -60,7 +60,6 @@ def initFruits(app):
     app.sliced = False
     app.grav = 0.7
 
-
 def createWave(app,numFruits):
     waveFruits = []
     for i in range(numFruits):
@@ -75,7 +74,6 @@ def createWave(app,numFruits):
         waveFruits.append(newFruit)
 
     app.fruits.extend(waveFruits)
-
 
 def mousePressed(app, event):
     bladeMouse(app, event)
@@ -97,26 +95,19 @@ def keyPressed(app, event):
         createWave(app,5)
         print(time.time())
     
+def cleanFruits(app):
+    i = 0
+    while i<len(app.fruits):
+        (x,y) = app.fruits[i].pos
+        if(y > app.height + 100):
+            app.fruits.pop(i)
+        else:
+            i += 1
 
 def mouseReleased(app, event):
     app.mousePress = False
     blade.resetBladeCount(app,event)
-
-    #TEMPORARY
-    '''
-    end = (event.x, event.y)
-    app.slice[1] = end
-    p0,p1 = app.slice[0], app.slice[1]
-    i = 0
-    while i < len(app.fruits):
-        f = app.fruits[i]
-        (x,y) = f.pos
-        globPoints = Fruit.localToGlobal(f.points, x, y)
-        if(sliceFunction.sliceIntersectsPolygon(globPoints,p0,p1)):
-            sliceFruit(app, f, i, p0, p1, app.width, app.height)
-            i += 1
-        i += 1
-    '''
+    cleanFruits(app)
 
 def sliceAllFruits(app):
     i = 0
@@ -170,11 +161,19 @@ def redrawAll(app, canvas):
     drawScore(app,canvas)
 
 def drawScore(app,canvas):
-    message = f"SCORE: {app.score}"
-    canvas.create_text(app.width/2, 40, text= message, font='Arial 30 bold')
+    message = f"{app.score}"
+    margin = 10
+    canvas.create_text(margin, app.height-margin, text= message,
+                     font='Arial 60 bold', fill = "white", anchor = "sw")
 
 def drawBackdrop(app, canvas):
-    canvas.create_rectangle(0,0,app.width, app.height, fill="dimgrey")
+    c = 40
+    canvas.create_rectangle(0,0,app.width,app.height,fill=rgbString(c,c,c))
+
+def rgbString(r, g, b):
+    # Don't worry about the :02x part, but for the curious,
+    # it says to use hex (base 16) with two digits.
+    return f'#{r:02x}{g:02x}{b:02x}'
 
 def drawFruits(app, canvas):
     for f in app.fruits:
@@ -190,7 +189,6 @@ def drawFruits(app, canvas):
         elif(f.fruitType == "strawberry"):
             c = "firebrick"
         canvas.create_polygon(coords, fill=c,width=4)
-        #canvas.create_oval(cx-5,cy-5,cx+5,cy+5,fill="red")
 
 runApp(width=1100, height=800)
 
