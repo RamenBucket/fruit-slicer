@@ -51,7 +51,7 @@ def initFruits(app):
     f1 = Fruit.Fruit(outline, (500,600), (0,-10), f, True)
     f2 = Fruit.Fruit(outline, (700,300), (0,-10), f, True)
     f3 = Fruit.Fruit(outline, (600,300), (0,-10), f, True)
-    
+
     #app.fruits.append(f0)
     app.fruits.extend([f0,f1,f2,f3])
     app.sliced = False
@@ -135,6 +135,7 @@ def doStep(app):
         f.move(app.grav)
 
 def redrawAll(app, canvas):
+    drawBackdrop(app, canvas)
     drawFruits(app, canvas)
     blade.drawBlade(app,canvas)
     drawScore(app,canvas)
@@ -142,6 +143,9 @@ def redrawAll(app, canvas):
 def drawScore(app,canvas):
     message = f"SCORE: {app.score}"
     canvas.create_text(app.width/2, 40, text= message, font='Arial 30 bold')
+
+def drawBackdrop(app, canvas):
+    canvas.create_rectangle(0,0,app.width, app.height, fill="dimgrey")
 
 def drawFruits(app, canvas):
     for f in app.fruits:
@@ -156,8 +160,8 @@ def drawFruits(app, canvas):
             c = "forestgreen"
         elif(f.fruitType == "strawberry"):
             c = "firebrick"
-        canvas.create_polygon(coords, fill=c,width=4, outline="black")
-        canvas.create_oval(cx-5,cy-5,cx+5,cy+5,fill="red")
+        canvas.create_polygon(coords, fill=c,width=4)
+        #canvas.create_oval(cx-5,cy-5,cx+5,cy+5,fill="red")
 
 runApp(width=1100, height=800)
 
