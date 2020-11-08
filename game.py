@@ -41,6 +41,9 @@ def appStarted(app):
     app.slice=[None,None]
 
     app.score = 0
+    app.lastWave = time.time()
+    app.timeBetweenWaves = 5
+    app.numFruits = 3
 
 def initFruits(app):
     app.fruits = []
@@ -54,14 +57,18 @@ def initFruits(app):
     #app.fruits.append(f0)
     app.fruits.extend([f0,f1,f2,f3])
     app.sliced = False
-    app.grav = 0.2
+    app.grav = 0.7
 
 def createWave(app,numFruits):
     waveFruits = []
     for i in range(numFruits):
         (f, outline) = getFruit()
         xCoord = random.randint(0,app.width)
-        dx,dy = random.randint(-15,15), -random.randint(0,20)
+        dx,dy = random.randint(-15,15), -random.randint(10,35)
+        if(xCoord < app.width/2):
+            dx = abs(dx)
+        else:
+            dx = -abs(dx)
         newFruit = Fruit.Fruit(outline, (xCoord,app.height), (dx,dy), f, True)
         waveFruits.append(newFruit)
 
@@ -85,6 +92,7 @@ def bladeMouse(app, event):
 def keyPressed(app, event):
     if (event.key == "t"):
         createWave(app,5)
+        print(time.time())
     
 def cleanFruits(app):
     i = 0
@@ -135,6 +143,12 @@ def timerFired(app):
     doStep(app)       
             
 def doStep(app):
+
+    if((time.time() - app.lastWave) > app.timeBetweenWaves):
+        numFruits = app.score//100
+        createWave(app,app.numFruits)
+        app.lastWave = time.time()
+
     blade.stepBlade(app)
     for f in app.fruits:
         f.move(app.grav)
