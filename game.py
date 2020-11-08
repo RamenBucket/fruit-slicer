@@ -84,10 +84,7 @@ def bladeMouse(app, event):
         app.t0 = time.time()
 
 def keyPressed(app, event):
-    if (event.key == "t"):
-        createWave(app,5)
-        print(time.time())
-    
+    pass
 def cleanFruits(app):
     i = 0
     while i<len(app.fruits):
