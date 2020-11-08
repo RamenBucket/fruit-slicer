@@ -41,6 +41,8 @@ def appStarted(app):
     #TEMPORARY!!!
     app.slice=[None,None]
 
+    app.score = 0
+
 def initFruits(app):
     app.fruits = []
     #p = [(-50,0),(-35,35),(0,50),(35,35),(50,0),(35,-35),(0,-50),(-35,-35)]
@@ -85,6 +87,7 @@ def mouseReleased(app, event):
         (x,y) = f.pos
         globPoints = Fruit.localToGlobal(f.points, x, y)
         if(sliceFunction.sliceIntersectsPolygon(globPoints,p0,p1)):
+            app.score += 1
             (f1, f2) = f.slice(p0, p1, app.width,app.height)
             app.fruits.pop(i)
             app.fruits.insert(i,f2)
@@ -112,6 +115,14 @@ def doStep(app):
 def redrawAll(app, canvas):
     drawFruits(app, canvas)
     blade.drawBlade(app,canvas)
+    drawScore(app,canvas)
+
+def drawScore(app,canvas):
+    message = f"score is {app.score}"
+    canvas.create_text(app.width/2, 40, text= message, font='Arial 30 bold')
+
+
+
 
 def drawFruits(app, canvas):
     for f in app.fruits:
