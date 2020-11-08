@@ -133,6 +133,9 @@ def redrawAll(app, canvas):
     drawFruits(app, canvas)
     blade.drawBlade(app,canvas)
 
+def drawBackdrop(app, canvas):
+    canvas.create_rectangle(0,0,app.width, app.height, color="")
+
 def drawFruits(app, canvas):
     for f in app.fruits:
         (cx, cy) = f.pos
@@ -146,8 +149,8 @@ def drawFruits(app, canvas):
             c = "forestgreen"
         elif(f.fruitType == "strawberry"):
             c = "firebrick"
-        canvas.create_polygon(coords, fill=c,width=4, outline="black")
-        canvas.create_oval(cx-5,cy-5,cx+5,cy+5,fill="red")
+        canvas.create_polygon(coords, fill=c,width=4)
+        #canvas.create_oval(cx-5,cy-5,cx+5,cy+5,fill="red")
 
 runApp(width=1100, height=800)
 
