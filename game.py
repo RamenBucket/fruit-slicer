@@ -139,7 +139,7 @@ def timerFired(app):
 def doStep(app):
 
     if((time.time() - app.lastWave) > app.timeBetweenWaves):
-        numFruits = 2 + app.score//30
+        app.numFruits = 2 + app.score//30
         createWave(app,app.numFruits)
         app.lastWave = time.time()
 
