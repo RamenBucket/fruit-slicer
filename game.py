@@ -55,7 +55,7 @@ def initFruits(app):
     #app.fruits.append(f0)
     app.fruits.extend([f0,f1,f2,f3])
     app.sliced = False
-    app.grav = 0.2
+    app.grav = 0.7
 
 
 def createWave(app,numFruits):
@@ -63,7 +63,11 @@ def createWave(app,numFruits):
     for i in range(numFruits):
         (f, outline) = getFruit()
         xCoord = random.randint(0,app.width)
-        dx,dy = random.randint(-15,15), -random.randint(0,20)
+        dx,dy = random.randint(-15,15), -random.randint(10,35)
+        if(xCoord < app.width/2):
+            dx = abs(dx)
+        else:
+            dx = -abs(dx)
         newFruit = Fruit.Fruit(outline, (xCoord,app.height), (dx,dy), f, True)
         waveFruits.append(newFruit)
 
