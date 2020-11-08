@@ -49,13 +49,7 @@ def initFruits(app):
     app.fruits = []
     #p = [(-50,0),(-35,35),(0,50),(35,35),(50,0),(35,-35),(0,-50),(-35,-35)]
     (f, outline) = getFruit()
-    f0 = Fruit.Fruit(outline, (200,200), (0,-10), f, True)
-    f1 = Fruit.Fruit(outline, (500,600), (0,-10), f, True)
-    f2 = Fruit.Fruit(outline, (700,300), (0,-10), f, True)
-    f3 = Fruit.Fruit(outline, (600,300), (0,-10), f, True)
-
-    #app.fruits.append(f0)
-    app.fruits.extend([f0,f1,f2,f3])
+    createWave(app,3)
     app.sliced = False
     app.grav = 0.3
 
@@ -145,7 +139,9 @@ def timerFired(app):
 def doStep(app):
 
     if((time.time() - app.lastWave) > app.timeBetweenWaves):
-        numFruits = app.score//100
+
+        numFruits = app.score//30
+
         createWave(app,app.numFruits)
         app.lastWave = time.time()
 
