@@ -50,8 +50,10 @@ def initFruits(app):
     f0 = Fruit.Fruit(outline, (200,200), (0,-10), f, True)
     f1 = Fruit.Fruit(outline, (500,600), (0,-10), f, True)
     f2 = Fruit.Fruit(outline, (700,300), (0,-10), f, True)
+    f3 = Fruit.Fruit(outline, (600,300), (0,-10), f, True)
+    
     #app.fruits.append(f0)
-    app.fruits.extend([f0,f1,f2])
+    app.fruits.extend([f0,f1,f2,f3])
     app.sliced = False
     app.grav = 0.2
 
@@ -138,9 +140,8 @@ def redrawAll(app, canvas):
     drawScore(app,canvas)
 
 def drawScore(app,canvas):
-    message = f"score is {app.score}"
+    message = f"SCORE: {app.score}"
     canvas.create_text(app.width/2, 40, text= message, font='Arial 30 bold')
-
 
 def drawFruits(app, canvas):
     for f in app.fruits:
