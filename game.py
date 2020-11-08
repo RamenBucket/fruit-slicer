@@ -145,7 +145,13 @@ def drawScore(app,canvas):
     canvas.create_text(app.width/2, 40, text= message, font='Arial 30 bold')
 
 def drawBackdrop(app, canvas):
-    canvas.create_rectangle(0,0,app.width, app.height, fill="dimgrey")
+    c = 40
+    canvas.create_rectangle(0,0,app.width,app.height,fill=rgbString(c,c,c))
+
+def rgbString(r, g, b):
+    # Don't worry about the :02x part, but for the curious,
+    # it says to use hex (base 16) with two digits.
+    return f'#{r:02x}{g:02x}{b:02x}'
 
 def drawFruits(app, canvas):
     for f in app.fruits:
@@ -161,7 +167,6 @@ def drawFruits(app, canvas):
         elif(f.fruitType == "strawberry"):
             c = "firebrick"
         canvas.create_polygon(coords, fill=c,width=4)
-        #canvas.create_oval(cx-5,cy-5,cx+5,cy+5,fill="red")
 
 runApp(width=1100, height=800)
 

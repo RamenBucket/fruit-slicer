@@ -92,5 +92,5 @@ def drawBlade(app,canvas):
             s = maxSize-(i-splitIndex)*dSizeDown
         #s = 5#app.bladeSize[i%len(app.bladeSize)]
         canvas.create_oval(x-s,y-s,x+s,y+s,
-        fill = "black",outline = '')
-        canvas.create_line(x,y,x1,y1, width=2*s, fill = app.bladeColor)
+        fill = "white",outline = '')
+        canvas.create_line(x,y,x1,y1, width=2*s, fill = "white")
