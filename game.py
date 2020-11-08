@@ -57,6 +57,19 @@ def initFruits(app):
     app.sliced = False
     app.grav = 0.2
 
+
+def createWave(app,numFruits):
+    waveFruits = []
+    for i in range(numFruits):
+        (f, outline) = getFruit()
+        xCoord = random.randint(0,app.width)
+        dx,dy = random.randint(-15,15), -random.randint(0,20)
+        newFruit = Fruit.Fruit(outline, (xCoord,app.height), (dx,dy), f, True)
+        waveFruits.append(newFruit)
+
+    app.fruits.extend(waveFruits)
+
+
 def mousePressed(app, event):
     bladeMouse(app, event)
     #fruitTest(app)
@@ -73,7 +86,9 @@ def bladeMouse(app, event):
         app.t0 = time.time()
 
 def keyPressed(app, event):
-    pass
+    if (event.key == "t"):
+        createWave(app,5)
+    
 
 def mouseReleased(app, event):
     app.mousePress = False
