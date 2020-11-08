@@ -140,7 +140,7 @@ def doStep(app):
 
     if((time.time() - app.lastWave) > app.timeBetweenWaves):
         app.numFruits = 2 + app.score//30
-        if(app.numFruits < 8):
+        if(app.numFruits > 8):
             app.numFruits = 8
         createWave(app,app.numFruits)
         app.lastWave = time.time()
