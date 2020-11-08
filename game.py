@@ -57,7 +57,6 @@ def initFruits(app):
     app.sliced = False
     app.grav = 0.2
 
-
 def createWave(app,numFruits):
     waveFruits = []
     for i in range(numFruits):
@@ -68,7 +67,6 @@ def createWave(app,numFruits):
         waveFruits.append(newFruit)
 
     app.fruits.extend(waveFruits)
-
 
 def mousePressed(app, event):
     bladeMouse(app, event)
@@ -89,26 +87,19 @@ def keyPressed(app, event):
     if (event.key == "t"):
         createWave(app,5)
     
+def cleanFruits(app):
+    i = 0
+    while i<len(app.fruits):
+        (x,y) = app.fruits[i].pos
+        if(y > app.height + 100):
+            app.fruits.pop(i)
+        else:
+            i += 1
 
 def mouseReleased(app, event):
     app.mousePress = False
     blade.resetBladeCount(app,event)
-
-    #TEMPORARY
-    '''
-    end = (event.x, event.y)
-    app.slice[1] = end
-    p0,p1 = app.slice[0], app.slice[1]
-    i = 0
-    while i < len(app.fruits):
-        f = app.fruits[i]
-        (x,y) = f.pos
-        globPoints = Fruit.localToGlobal(f.points, x, y)
-        if(sliceFunction.sliceIntersectsPolygon(globPoints,p0,p1)):
-            sliceFruit(app, f, i, p0, p1, app.width, app.height)
-            i += 1
-        i += 1
-    '''
+    cleanFruits(app)
 
 def sliceAllFruits(app):
     i = 0
