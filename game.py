@@ -78,6 +78,7 @@ def mouseReleased(app, event):
     blade.resetBladeCount(app,event)
 
     #TEMPORARY
+    '''
     end = (event.x, event.y)
     app.slice[1] = end
     p0,p1 = app.slice[0], app.slice[1]
@@ -87,13 +88,30 @@ def mouseReleased(app, event):
         (x,y) = f.pos
         globPoints = Fruit.localToGlobal(f.points, x, y)
         if(sliceFunction.sliceIntersectsPolygon(globPoints,p0,p1)):
-            app.score += 1
-            (f1, f2) = f.slice(p0, p1, app.width,app.height)
-            app.fruits.pop(i)
-            app.fruits.insert(i,f2)
-            app.fruits.insert(i,f1)
+            sliceFruit(app, f, i, p0, p1, app.width, app.height)
             i += 1
         i += 1
+    '''
+
+def sliceAllFruits(app):
+    i = 0
+    j = 0
+    for j in range(len(app.blade)-1):
+        p0, p1 = app.blade[j], app.blade[j+1]
+        while i < len(app.fruits):
+            f = app.fruits[i]
+            (x,y) = f.pos
+            globPoints = Fruit.localToGlobal(f.points, x, y)
+            if(sliceFunction.sliceIntersectsPolygon(globPoints,p0,p1)):
+                sliceFruit(app, f, i, p0, p1, app.width, app.height)
+                i += 1
+            i += 1
+
+def sliceFruit(app, f, i, p0, p1, w, h):
+    (f1, f2) = f.slice(p0, p1, w,h)
+    app.fruits.pop(i)
+    app.fruits.insert(i,f2)
+    app.fruits.insert(i,f1)
 
 def mouseDragged(app,event):
     app.lastMouseX, app.lastMouseY = event.x, event.y
@@ -102,6 +120,7 @@ def mouseDragged(app,event):
         #app.bladeCounter += 1
         x1,y1 = (event.x,event.y)
         blade.insertBlade(app,0,(x1,y1))
+        sliceAllFruits(app)
 
 def timerFired(app):
     app.timerDelay = 10
