@@ -133,6 +133,7 @@ def doStep(app):
         f.move(app.grav)
 
 def redrawAll(app, canvas):
+    drawBackdrop(app, canvas)
     drawFruits(app, canvas)
     blade.drawBlade(app,canvas)
     drawScore(app,canvas)
@@ -141,9 +142,8 @@ def drawScore(app,canvas):
     message = f"score is {app.score}"
     canvas.create_text(app.width/2, 40, text= message, font='Arial 30 bold')
 
-
 def drawBackdrop(app, canvas):
-    canvas.create_rectangle(0,0,app.width, app.height, color="")
+    canvas.create_rectangle(0,0,app.width, app.height, fill="dimgrey")
 
 def drawFruits(app, canvas):
     for f in app.fruits:
