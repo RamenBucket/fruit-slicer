@@ -105,6 +105,7 @@ def sliceAllFruits(app):
             if(sliceFunction.sliceIntersectsPolygon(globPoints,p0,p1)):
                 sliceFruit(app, f, i, p0, p1, app.width, app.height)
                 i += 1
+                app.score += 1
             i += 1
 
 def sliceFruit(app, f, i, p0, p1, w, h):
@@ -139,8 +140,6 @@ def redrawAll(app, canvas):
 def drawScore(app,canvas):
     message = f"score is {app.score}"
     canvas.create_text(app.width/2, 40, text= message, font='Arial 30 bold')
-
-
 
 
 def drawFruits(app, canvas):
