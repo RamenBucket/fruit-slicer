@@ -147,8 +147,10 @@ def redrawAll(app, canvas):
     drawScore(app,canvas)
 
 def drawScore(app,canvas):
-    message = f"SCORE: {app.score}"
-    canvas.create_text(app.width/2, 40, text= message, font='Arial 30 bold')
+    message = f"{app.score}"
+    margin = 10
+    canvas.create_text(margin, app.height-margin, text= message,
+                     font='Arial 60 bold', fill = "white", anchor = "sw")
 
 def drawBackdrop(app, canvas):
     c = 40
