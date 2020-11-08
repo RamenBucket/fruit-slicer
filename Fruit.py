@@ -6,7 +6,6 @@ import sliceFunction
 def getVelVectors(slope):
         vel = 2 #magnitude of velocity imparted
         angle = math.atan(slope)
-        print("angle:", angle)
         vx1, vy1 = math.cos(angle)*vel,math.sin(angle)*vel
         #vx2, vy2 = math.cos(angle+math.pi)*vel,math.sin(angle+math.pi)*vel
         return (vx1,vy1)#,(vx2,vy2) #first coordinate is always on the right
@@ -24,12 +23,6 @@ def localToGlobal(points,cx,cy): #centroid coordinates to canvas
         (x,y) = result[i]
         result[i] = (x+cx, y+cy)
     return result
-'''
-def testLocal():
-    list = [(-1,0),(0,1),(1,0),(0,-1)]
-    print(localToGlobal(list, 10, 10))
-testLocal()
-'''
 class Fruit(object):
     def __init__(self, points, pos, vel, fruitType, uncut):
         self.points = points

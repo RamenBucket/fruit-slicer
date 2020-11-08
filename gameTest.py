@@ -14,7 +14,6 @@ def appStarted(app):
 def mousePressed(app, event):
     if(not(app.sliced)):
         app.sliced = True
-        print("oboi")
         p0,p1 = (220,100),(200,310)
         i = 0
         while i < len(app.fruits):
@@ -36,8 +35,7 @@ def mouseDragged(app,event):
 
 def timerFired(app):
     app.timerDelay = 20
-    doStep(app)       
-            
+    doStep(app)        
 
 def doStep(app):
     for f in app.fruits:
