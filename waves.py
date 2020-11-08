@@ -1,1 +1,3 @@
-def chooseWave()
+
+
+def createWave
