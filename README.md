@@ -1,4 +1,4 @@
-# beat-slicer
+# fruit-slicer
 #
 # How to run:
 # Clone the repository onto your computer. game.py contains the main program file, run it to run the program. You do not need to import modules or install anything. 
