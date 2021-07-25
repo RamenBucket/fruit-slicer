@@ -1,8 +1,16 @@
-# 112-Hackathon-20
-# game.py is the main program file. You do not need to import any modules or install anything. Everything is run on cmu_112_graphics.
+# beat-slicer
 #
-# Welcome to Definately Not Fruit Ninja. Fruits fly up from the ground and you drag your mouse over them to slice. The more you slice, the more points you get.
+# How to run:
+# Clone the repository onto your computer. game.py contains the main program file, run it to run the program. You do not need to import modules or install anything. 
+#
+# The program is run on cmu_112_graphics. 
+# https://www.cs.cmu.edu/~112/notes/cmu_112_graphics.py
+#
+# To play:
+# Fruits fly up from the bottom of the screen. Drag your mouse over them to slice and get points. You can slice the fruit multiple times.
 # 
-# Press 't' generate more fruits
+# Commands:
+# Press 't' generate more fruits.
 #
-# The slicing algorithm uses Sutherland-Hodgman polygon clipping, so the slicing is more exact than fruit ninja (you can slice it into a bunch of tiny little pieces!).
+# The slicing uses Sutherland-Hodgman polygon clipping. The algorithm can be found here:
+# https://rosettacode.org/wiki/Sutherland-Hodgman_polygon_clipping#Python
