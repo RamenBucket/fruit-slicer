@@ -51,14 +51,14 @@ def initFruits(app):
     (f, outline) = getFruit()
     createWave(app,2)
     app.sliced = False
-    app.grav = 0.3
+    app.grav = 0.2
 
 def createWave(app,numFruits):
     waveFruits = []
     for i in range(numFruits):
         (f, outline) = getFruit()
         xCoord = random.randint(0,app.width)
-        dx,dy = random.randint(-8,8), -random.randint(15,20)
+        dx,dy = random.randint(-5,5), -random.randint(12,15)
         if(xCoord < app.width/2):
             dx = abs(dx)
         else:
