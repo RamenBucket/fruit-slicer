@@ -4,7 +4,7 @@ import copy
 import sliceFunction
 
 def getVelVectors(slope):
-        vel = 1.0 #magnitude of velocity imparted
+        vel = 100.0 #magnitude of velocity imparted
         angle = math.atan(slope)
         vx1, vy1 = math.cos(angle)*vel,math.sin(angle)*vel
         #vx2, vy2 = math.cos(angle+math.pi)*vel,math.sin(angle+math.pi)*vel
@@ -84,11 +84,11 @@ class Fruit(object):
         f2 = Fruit(points2,pos2,vel2,self.fruitType,False)
         return (f1, f2)
     
-    def move(self, grav, delay): #grav = pixels/frame, pre-calculated
+    def move(self, grav, dt): #grav = pixels/frame, pre-calculated
         (dx, dy) = self.vel
         (x,y) = self.pos
-        self.pos = (x+dx*delay, y+dy*delay) #change position based on velocity
-        self.vel = (dx, dy+grav*delay) #gravitational acceleration
+        self.pos = (x+dx*dt, y+dy*dt) #change position based on velocity
+        self.vel = (dx, dy+grav*dt) #gravitational acceleration
 
 #global to center of mass - each coordiinate is defined relative to the centroid
 # ex) centroid is (122,122) -- coordinates aree  (+1,-2),(-5,+7)

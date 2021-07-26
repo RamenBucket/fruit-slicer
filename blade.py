@@ -7,17 +7,20 @@ def init(app):
     app.blade = list()
     
     #app.startpos = None
-    app.t0,app.t1 = 0,0
     app.bladeTime = 0
-    app.bladeMaxLength = 80 #pixel length of blade
-    app.bladeMaxWidth = 5
-    app.bladeColor = None
+    app.bladeMaxLength = 300 #pixel length of blade
+    app.bladeTicks = 0
+    app.removeDelay = 2
+    app.minPoints = 4
+    app.maxPoints = 100
+    app.pointTime = 100
 
 def resetBladeCount(app,event):
+    return
     app.bladeCounter = 0
 
 def insertBlade(app,index,coord):
-       app.blade.insert(index,coord) # just for the blade here
+    app.blade.insert(index,coord) # just for the blade here
         
 def stepBlade(app):
     app.bladeTime += 1
@@ -37,7 +40,8 @@ def stepBlade(app):
 
     if(len(app.blade) > 0):
         if(app.mousePress and app.bladeTime%removeDelay == 0): #pop less
-            app.blade.pop() 
+            pass
+            #app.blade.pop() 
         elif(not(app.mousePress)):#(app.bladeTime%3 == 0):# and not(app.mousePress)):
             app.blade.pop()
     #print(i)
@@ -70,6 +74,7 @@ def rgbString(r, g, b):
 
 
 def drawBlade(app,canvas):
+    '''
     split = 0.3
     splitIndex = int(len(app.blade)*split)
     maxSize = app.bladeMaxWidth
@@ -81,11 +86,14 @@ def drawBlade(app,canvas):
         dSizeDown = maxSize/(len(app.blade)-splitIndex)
     except:
         pass
+    '''
+    
 
     for i in range(len(app.blade)-1):
         x,y = app.blade[i]
         x1,y1 = app.blade[i+1]
         s = 0
+        '''
         if(i < splitIndex):
             s = i*dSizeUp
         else:
@@ -93,4 +101,6 @@ def drawBlade(app,canvas):
         #s = 5#app.bladeSize[i%len(app.bladeSize)]
         canvas.create_oval(x-s,y-s,x+s,y+s,
         fill = "white",outline = '')
-        canvas.create_line(x,y,x1,y1, width=2*s, fill = "white")
+        '''
+        
+        canvas.create_line(x,y,x1,y1, width=2, fill = "white")

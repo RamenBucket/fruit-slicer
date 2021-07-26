@@ -45,6 +45,7 @@ def appStarted(app):
     app.timeBetweenWaves = 5
     app.numFruits = 3
     app.timerDelay = 1
+    app.prevTime = time.time()
 
 def initFruits(app):
     app.fruits = []
@@ -52,14 +53,14 @@ def initFruits(app):
     (f, outline) = getFruit()
     createWave(app,2)
     app.sliced = False
-    app.grav = 0.015
+    app.grav = 600
 
 def createWave(app,numFruits):
     waveFruits = []
     for i in range(numFruits):
         (f, outline) = getFruit()
         xCoord = random.randint(int(app.width/6),int(app.width*(5/6)))
-        dx,dy = float(random.randint(-5,5))/10, -float(random.randint(25,40))/10
+        dx,dy = float(random.randint(-100,100)), -float(random.randint(700,800))
         if(xCoord < app.width/2):
             dx = abs(dx)
         else:
@@ -144,7 +145,8 @@ def doStep(app):
 
     blade.stepBlade(app)
     for f in app.fruits:
-        f.move(app.grav, app.timerDelay)
+        f.move(app.grav, (time.time()-app.prevTime))
+    app.prevTime = time.time()
 
 def redrawAll(app, canvas):
     drawBackdrop(app, canvas)
