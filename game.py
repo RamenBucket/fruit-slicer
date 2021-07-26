@@ -11,9 +11,7 @@ import random
 import time
 import sliceFunction
 
-#point = Point(0.5, 0.5)
-#polygon = Polygon([(0, 0), (0, 1), (1, 1), (1, 0)])
-#print(polygon.contains(point))
+
 
 fruitOutlines = [
     [(0,-50),(-39,-31),(-49,11),(-22,45),(22,45),(49,11),(39,-31)],
@@ -29,11 +27,8 @@ fruitTypes = [
     "strawberry"
 ]
 
-def getFruit():
-    i = random.randint(0,3)
-    return (fruitTypes[i],fruitOutlines[i])
-
 def appStarted(app):
+    app.targetFPS = 1000
     initFruits(app)
 
     blade.init(app)
@@ -44,8 +39,13 @@ def appStarted(app):
     app.lastWave = time.time()
     app.timeBetweenWaves = 5
     app.numFruits = 3
-    app.timerDelay = 1
+    app.timerDelay = int(max(1000/app.targetFPS, 1.0))
     app.prevTime = time.time()
+
+
+def getFruit():
+    i = random.randint(0,3)
+    return (fruitTypes[i],fruitOutlines[i])
 
 def initFruits(app):
     app.fruits = []

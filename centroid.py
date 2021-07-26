@@ -39,4 +39,4 @@ def testCentroid():
     
     print(round(ans[0], 12), ans[1]) 
 
-testCentroid()
+#testCentroid()
