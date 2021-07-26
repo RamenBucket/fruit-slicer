@@ -60,7 +60,7 @@ def createWave(app,numFruits):
     for i in range(numFruits):
         (f, outline) = getFruit()
         xCoord = random.randint(int(app.width/6),int(app.width*(5/6)))
-        dx,dy = float(random.randint(-app.width/10,app.width/10)), -float(random.randint(int(app.height*7/8),app.height))
+        dx,dy = float(random.randint(-app.width//10,app.width//10)), -float(random.randint(int(app.height*7/8),app.height))
         if(xCoord < app.width/2):
             dx = abs(dx)
         else:

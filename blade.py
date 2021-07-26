@@ -40,5 +40,5 @@ def drawBlade(app,canvas):
     for i in range(len(app.blade)-1):
         x,y = app.blade[i][0]
         x1,y1 = app.blade[i+1][0]
-        s = (len(app.blade)-i)*2+4
+        s = (len(app.blade)-i)+3
         canvas.create_line(x,y,x1,y1, width=s, fill = "white")
