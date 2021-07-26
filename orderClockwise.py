@@ -57,9 +57,6 @@ def testOrdering():
     points.append((4, 2)) 
     points.append((6, 4)) 
 
-    print(points)
     answer = orderClockwise(points) 
-    print("clockwise is:",answer)
-    print("done")
 
 testOrdering()

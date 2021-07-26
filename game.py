@@ -16,7 +16,7 @@ import sliceFunction
 #print(polygon.contains(point))
 
 fruitOutlines = [
-    [(-50,0),(-35,35),(0,50),(35,35),(50,0),(35,-35),(0,-50),(-35,-35)],
+    [(-60,0),(-40,40),(0,60),(40,40),(60,0),(40,-40),(0,-60),(-40,-40)],
     [(-50,0),(-35,30),(0,40),(35,30),(50,0),(35,-30),(0,-40),(-35,-30)],
     [(-50,0),(-35,30),(0,40),(35,30),(50,0),(35,-30),(0,-40),(-35,-30)],
     [(-50,0),(-28,28),(0,50),(28,28),(50,0),(35,-35),(0,-50),(-35,-35)]
@@ -44,6 +44,7 @@ def appStarted(app):
     app.lastWave = time.time()
     app.timeBetweenWaves = 5
     app.numFruits = 3
+    app.timerDelay = 1
 
 def initFruits(app):
     app.fruits = []
@@ -51,14 +52,14 @@ def initFruits(app):
     (f, outline) = getFruit()
     createWave(app,2)
     app.sliced = False
-    app.grav = 0.2
+    app.grav = 0.015
 
 def createWave(app,numFruits):
     waveFruits = []
     for i in range(numFruits):
         (f, outline) = getFruit()
-        xCoord = random.randint(0,app.width)
-        dx,dy = random.randint(-5,5), -random.randint(12,15)
+        xCoord = random.randint(int(app.width/6),int(app.width*(5/6)))
+        dx,dy = float(random.randint(-5,5))/10, -float(random.randint(25,40))/10
         if(xCoord < app.width/2):
             dx = abs(dx)
         else:
@@ -130,7 +131,6 @@ def mouseDragged(app,event):
         sliceAllFruits(app)
 
 def timerFired(app):
-    app.timerDelay = 10
     doStep(app)       
             
 def doStep(app):
@@ -144,7 +144,7 @@ def doStep(app):
 
     blade.stepBlade(app)
     for f in app.fruits:
-        f.move(app.grav)
+        f.move(app.grav, app.timerDelay)
 
 def redrawAll(app, canvas):
     drawBackdrop(app, canvas)
