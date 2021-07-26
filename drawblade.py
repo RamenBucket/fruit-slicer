@@ -73,7 +73,7 @@ def rgbString(r, g, b):
 
 def redrawAll(app, canvas):
     for i in range(len(app.blade)):
-        x,y = app.blade[i]
+        x,y = app.blade[i][0]
         s = app.bladeSize[i%len(app.bladeSize)]
         canvas.create_oval(x-s,y-s,x+s,y+s,
         fill = app.bladeColor,outline = None)

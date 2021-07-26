@@ -60,7 +60,7 @@ def createWave(app,numFruits):
     for i in range(numFruits):
         (f, outline) = getFruit()
         xCoord = random.randint(int(app.width/6),int(app.width*(5/6)))
-        dx,dy = float(random.randint(-100,100)), -float(random.randint(700,800))
+        dx,dy = float(random.randint(-app.width/10,app.width/10)), -float(random.randint(int(app.height*7/8),app.height))
         if(xCoord < app.width/2):
             dx = abs(dx)
         else:
@@ -98,14 +98,13 @@ def cleanFruits(app):
 
 def mouseReleased(app, event):
     app.mousePress = False
-    blade.resetBladeCount(app,event)
     cleanFruits(app)
 
 def sliceAllFruits(app):
     i = 0
     j = 0
     for j in range(len(app.blade)-1):
-        p0, p1 = app.blade[j], app.blade[j+1]
+        p0, p1 = app.blade[j][0], app.blade[j+1][0]
         while i < len(app.fruits):
             f = app.fruits[i]
             (x,y) = f.pos

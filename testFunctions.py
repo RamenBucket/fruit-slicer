@@ -85,7 +85,7 @@ def keyPressed(app, event):
 
 def mouseReleased(app, event):
     app.mousePress = False
-    blade.resetBladeCount(app,event)
+    #blade.resetBladeCount(app,event)
 
     #TEMPORARY
     print("bruh")
