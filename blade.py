@@ -41,5 +41,5 @@ def drawBlade(app,canvas):
         x,y = app.blade[i][0]
         x1,y1 = app.blade[i+1][0]
         s = (len(app.blade)-i)+3
-        canvas.create_oval(x-s//2, y-s//2, x+s//2, y+s//2, fill = "black")
+        canvas.create_oval(x-s//2, y-s//2, x+s//2, y+s//2, fill = "white")
         canvas.create_line(x,y,x1,y1, width=s, fill = "white")
