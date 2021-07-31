@@ -160,7 +160,7 @@ def drawScore(app,canvas):
                      font='Arial 60 bold', fill = "white", anchor = "sw")
 
 def drawBackdrop(app, canvas):
-    c = 40
+    c = 255
     canvas.create_rectangle(0,0,app.width,app.height,fill=rgbString(c,c,c))
 
 def rgbString(r, g, b):

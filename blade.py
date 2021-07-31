@@ -10,7 +10,7 @@ def init(app):
     app.bladeTime = 0
     app.minPoints = 4
     app.maxPoints = 100
-    app.pointTime = 150
+    app.pointTime = 100
 
 def insertBlade(app,index,coord):
     app.blade.insert(index,(coord, time.time())) # just for the blade here
@@ -41,4 +41,5 @@ def drawBlade(app,canvas):
         x,y = app.blade[i][0]
         x1,y1 = app.blade[i+1][0]
         s = (len(app.blade)-i)+3
-        canvas.create_line(x,y,x1,y1, width=s, fill = "white")
+        canvas.create_oval(x-s//2, y-s//2, x+s//2, y+s//2, fill = "black")
+        canvas.create_line(x,y,x1,y1, width=s, fill = "black")
