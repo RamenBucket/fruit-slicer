@@ -117,7 +117,7 @@ def timerFired(app):
 def doStep(app):
     blade.stepBlade(app)
     for f in app.fruits:
-        f.move(0)
+        f.move(0,.01)
 
 def redrawAll(app, canvas):
     drawFruits(app, canvas)
