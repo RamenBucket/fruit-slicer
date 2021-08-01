@@ -1,4 +1,4 @@
-# fruit-slicer-cv
+# fruit-slicer
 ### Fruit Slicer
 ##### A 2D polygonal fruit slicing game written entirely in Python, based on Fruit Ninja.
 ##### Features recursive geometric slicing - fruits are sliced where the blade hits them, and fragments can be sliced repeatedly.
